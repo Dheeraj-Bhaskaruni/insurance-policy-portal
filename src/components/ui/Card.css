@@ -1,0 +1,21 @@
+.card {
+  background-color: var(--bg-primary);
+  border: 1px solid var(--color-gray-200);
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-sm);
+}
+
+.card-padding-none { padding: 0; }
+.card-padding-sm { padding: var(--spacing-3); }
+.card-padding-md { padding: var(--spacing-5); }
+.card-padding-lg { padding: var(--spacing-8); }
+
+.card-hoverable {
+  cursor: pointer;
+  transition: box-shadow var(--transition-fast), transform var(--transition-fast);
+}
+
+.card-hoverable:hover {
+  box-shadow: var(--shadow-md);
+  transform: translateY(-1px);
+}
