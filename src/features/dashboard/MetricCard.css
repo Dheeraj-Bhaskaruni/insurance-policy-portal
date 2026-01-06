@@ -1,0 +1,49 @@
+.metric-card {
+  background-color: white;
+  border-radius: var(--radius-lg);
+  padding: var(--spacing-5);
+  border: 1px solid var(--color-gray-200);
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  box-shadow: var(--shadow-sm);
+}
+
+.metric-content {
+  display: flex;
+  flex-direction: column;
+}
+
+.metric-title {
+  font-size: var(--font-size-sm);
+  color: var(--color-gray-500);
+  font-weight: var(--font-weight-medium);
+}
+
+.metric-value {
+  font-size: var(--font-size-2xl);
+  font-weight: var(--font-weight-bold);
+  color: var(--color-gray-900);
+  margin: var(--spacing-1) 0;
+}
+
+.metric-subtitle {
+  font-size: var(--font-size-xs);
+  color: var(--color-gray-400);
+}
+
+.metric-icon-bg {
+  width: 44px;
+  height: 44px;
+  border-radius: var(--radius-lg);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.metric-icon { font-size: var(--font-size-xl); }
+
+.metric-icon-blue { background-color: var(--color-primary-100); color: var(--color-primary); }
+.metric-icon-green { background-color: var(--color-success-light); color: var(--color-success); }
+.metric-icon-amber { background-color: var(--color-warning-light); color: var(--color-warning); }
+.metric-icon-purple { background-color: #EDE9FE; color: #7C3AED; }
