@@ -15,7 +15,7 @@ describe('Card', () => {
   });
 
   it('handles click when onClick is provided', () => {
-    const onClick = jest.fn();
+    const onClick = vi.fn();
     render(<Card onClick={onClick}>Clickable</Card>);
     fireEvent.click(screen.getByText('Clickable'));
     expect(onClick).toHaveBeenCalled();

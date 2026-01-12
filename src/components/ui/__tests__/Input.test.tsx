@@ -25,7 +25,7 @@ describe('Input', () => {
   });
 
   it('handles value changes', () => {
-    const onChange = jest.fn();
+    const onChange = vi.fn();
     render(<Input label="Name" onChange={onChange} />);
     fireEvent.change(screen.getByLabelText('Name'), { target: { value: 'John' } });
     expect(onChange).toHaveBeenCalled();

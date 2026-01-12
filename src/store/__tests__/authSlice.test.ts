@@ -1,6 +1,23 @@
+import { vi, beforeEach } from 'vitest';
+
+// Mock localStorage before importing the slice
+const localStorageMock = {
+  getItem: vi.fn(() => null),
+  setItem: vi.fn(),
+  removeItem: vi.fn(),
+  clear: vi.fn(),
+  length: 0,
+  key: vi.fn(),
+};
+Object.defineProperty(globalThis, 'localStorage', { value: localStorageMock });
+
+// eslint-disable-next-line import/order
 import authReducer, { logout, clearError } from '../authSlice';
 
 describe('authSlice', () => {
+  beforeEach(() => {
+    vi.clearAllMocks();
+  });
   const initialState = {
     user: null,
     token: null,

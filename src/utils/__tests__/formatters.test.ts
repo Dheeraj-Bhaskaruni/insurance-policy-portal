@@ -17,7 +17,7 @@ describe('formatCurrency', () => {
 
 describe('formatDate', () => {
   it('formats ISO date strings', () => {
-    expect(formatDate('2026-03-15T00:00:00Z')).toBe('Mar 15, 2026');
+    expect(formatDate('2026-03-15T12:00:00Z')).toBe('Mar 15, 2026');
   });
 
   it('returns Invalid date for bad input', () => {
@@ -25,7 +25,7 @@ describe('formatDate', () => {
   });
 
   it('accepts custom format', () => {
-    expect(formatDate('2026-01-01T00:00:00Z', 'yyyy')).toBe('2026');
+    expect(formatDate('2026-01-01T12:00:00Z', 'yyyy')).toBe('2026');
   });
 });
 
