@@ -11,7 +11,7 @@ An enterprise-grade insurance policy management portal built with React 18, Type
 - **React Hook Form** for form validation
 - **Recharts** for data visualization
 - **Axios** for HTTP client with interceptors
-- **Jest + React Testing Library** for testing
+- **Vitest + React Testing Library** for testing
 - **CSS Variables** design system with responsive layouts
 
 ## Features
@@ -80,10 +80,10 @@ npm start
 ### Available Scripts
 
 ```bash
-npm start              # Start dev server on port 3000
-npm test               # Run tests
+npm dev                # Start Vite dev server on port 3000
+npm test               # Run tests with Vitest
 npm run test:coverage  # Run tests with coverage report
-npm run build          # Production build
+npm run build          # TypeScript check + Vite production build
 npm run lint           # ESLint check
 npm run lint:fix       # Auto-fix lint issues
 npm run format         # Format code with Prettier
