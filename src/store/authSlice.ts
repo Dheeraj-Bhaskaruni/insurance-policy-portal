@@ -1,4 +1,4 @@
-import { createSlice, createAsyncThunk, PayloadAction } from '@reduxjs/toolkit';
+import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 
 import { authService } from '../services/authService';
 import { AuthState, LoginCredentials, User } from '../types';
@@ -35,6 +35,10 @@ export const login = createAsyncThunk(
   },
 );
 
+export const logoutUser = createAsyncThunk('auth/logout', async () => {
+  authService.logout();
+});
+
 export const restoreSession = createAsyncThunk(
   'auth/restoreSession',
   async (_, { rejectWithValue }) => {
@@ -55,13 +59,6 @@ const authSlice = createSlice({
   name: 'auth',
   initialState,
   reducers: {
-    logout(state) {
-      authService.logout();
-      state.user = null;
-      state.token = null;
-      state.isAuthenticated = false;
-      state.error = null;
-    },
     clearError(state) {
       state.error = null;
     },
@@ -93,9 +90,15 @@ const authSlice = createSlice({
         state.user = null;
         state.token = null;
         state.loading = false;
+      })
+      .addCase(logoutUser.fulfilled, (state) => {
+        state.user = null;
+        state.token = null;
+        state.isAuthenticated = false;
+        state.error = null;
       });
   },
 });
 
-export const { logout, clearError } = authSlice.actions;
+export const { clearError } = authSlice.actions;
 export default authSlice.reducer;

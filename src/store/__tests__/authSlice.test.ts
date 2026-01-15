@@ -1,4 +1,4 @@
-import { vi, beforeEach } from 'vitest';
+import { vi, beforeEach, describe, it, expect } from 'vitest';
 
 // Mock localStorage before importing the slice
 const localStorageMock = {
@@ -12,12 +12,13 @@ const localStorageMock = {
 Object.defineProperty(globalThis, 'localStorage', { value: localStorageMock });
 
 // eslint-disable-next-line import/order
-import authReducer, { logout, clearError } from '../authSlice';
+import authReducer, { logoutUser, clearError, login } from '../authSlice';
 
 describe('authSlice', () => {
   beforeEach(() => {
     vi.clearAllMocks();
   });
+
   const initialState = {
     user: null,
     token: null,
@@ -37,7 +38,7 @@ describe('authSlice', () => {
     );
   });
 
-  it('handles logout', () => {
+  it('handles logoutUser.fulfilled', () => {
     const loggedInState = {
       ...initialState,
       user: { id: '1', email: 'test@test.com', firstName: 'Test', lastName: 'User', role: 'admin' as const, createdAt: '' },
@@ -45,7 +46,7 @@ describe('authSlice', () => {
       isAuthenticated: true,
     };
 
-    const state = authReducer(loggedInState, logout());
+    const state = authReducer(loggedInState, logoutUser.fulfilled(undefined, ''));
     expect(state.user).toBeNull();
     expect(state.token).toBeNull();
     expect(state.isAuthenticated).toBe(false);
@@ -55,5 +56,33 @@ describe('authSlice', () => {
     const errorState = { ...initialState, error: 'Something went wrong' };
     const state = authReducer(errorState, clearError());
     expect(state.error).toBeNull();
+  });
+
+  it('sets loading on login.pending', () => {
+    const state = authReducer(initialState, login.pending('', { email: '', password: '' }));
+    expect(state.loading).toBe(true);
+    expect(state.error).toBeNull();
+  });
+
+  it('sets user and token on login.fulfilled', () => {
+    const user = { id: '1', email: 'admin@test.com', firstName: 'Admin', lastName: 'User', role: 'admin' as const, createdAt: '' };
+    const state = authReducer(
+      initialState,
+      login.fulfilled({ user, token: 'jwt-token' }, '', { email: '', password: '' }),
+    );
+    expect(state.isAuthenticated).toBe(true);
+    expect(state.user).toEqual(user);
+    expect(state.token).toBe('jwt-token');
+    expect(state.loading).toBe(false);
+  });
+
+  it('sets error on login.rejected', () => {
+    const state = authReducer(
+      initialState,
+      login.rejected(null, '', { email: '', password: '' }, 'Invalid credentials'),
+    );
+    expect(state.loading).toBe(false);
+    expect(state.error).toBe('Invalid credentials');
+    expect(state.isAuthenticated).toBe(false);
   });
 });

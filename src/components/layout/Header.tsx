@@ -1,7 +1,8 @@
 import React from 'react';
 
 import { useAppDispatch, useAppSelector } from '../../store/hooks';
-import { logout } from '../../store/authSlice';
+import { logoutUser } from '../../store/authSlice';
+import { selectCurrentUser } from '../../store/selectors';
 import Button from '../ui/Button';
 
 import './Header.css';
@@ -12,7 +13,7 @@ interface HeaderProps {
 
 const Header: React.FC<HeaderProps> = ({ onMenuToggle }) => {
   const dispatch = useAppDispatch();
-  const user = useAppSelector((state) => state.auth.user);
+  const user = useAppSelector(selectCurrentUser);
 
   return (
     <header className="header">
@@ -25,7 +26,7 @@ const Header: React.FC<HeaderProps> = ({ onMenuToggle }) => {
         </h2>
       </div>
       <div className="header-right">
-        <Button variant="ghost" size="sm" onClick={() => dispatch(logout())}>
+        <Button variant="ghost" size="sm" onClick={() => dispatch(logoutUser())}>
           Sign Out
         </Button>
       </div>

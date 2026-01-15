@@ -1,13 +1,16 @@
-import React, { useState } from 'react';
+import React, { useEffect, useMemo, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useForm, Controller } from 'react-hook-form';
 
 import { Card, Button } from '../../components/ui';
 import Input from '../../components/ui/Input';
 import Select from '../../components/ui/Select';
-import { useAppDispatch } from '../../store/hooks';
+import { useAppDispatch, useAppSelector } from '../../store/hooks';
 import { createClaim } from '../../store/claimsSlice';
+import { fetchPolicies } from '../../store/policiesSlice';
+import { selectPolicyItems } from '../../store/selectors';
 import { usePageTitle } from '../../hooks/usePageTitle';
+import { POLICY_TYPE_LABELS } from '../../utils/constants';
 
 import './CreateClaimPage.css';
 
@@ -15,7 +18,26 @@ const CreateClaimPage: React.FC = () => {
   usePageTitle('File a Claim');
   const navigate = useNavigate();
   const dispatch = useAppDispatch();
+  const policies = useAppSelector(selectPolicyItems);
   const [submitting, setSubmitting] = useState(false);
+  const [submitError, setSubmitError] = useState<string | null>(null);
+
+  useEffect(() => {
+    if (policies.length === 0) {
+      dispatch(fetchPolicies({ pageSize: 100, status: 'active' }));
+    }
+  }, [dispatch, policies.length]);
+
+  const policyOptions = useMemo(
+    () =>
+      policies
+        .filter((p) => p.status === 'active')
+        .map((p) => ({
+          value: p.id,
+          label: `${p.policyNumber} - ${p.customerName} (${POLICY_TYPE_LABELS[p.type]})`,
+        })),
+    [policies],
+  );
 
   const { control, handleSubmit, formState: { errors } } = useForm({
     defaultValues: {
@@ -28,14 +50,19 @@ const CreateClaimPage: React.FC = () => {
 
   const onSubmit = async (data: { policyId: string; amount: string; description: string; incidentDate: string }) => {
     setSubmitting(true);
-    await dispatch(createClaim({
+    setSubmitError(null);
+    const result = await dispatch(createClaim({
       policyId: data.policyId,
       amount: parseFloat(data.amount),
       description: data.description,
       incidentDate: new Date(data.incidentDate).toISOString(),
     }));
     setSubmitting(false);
-    navigate('/claims');
+    if (createClaim.fulfilled.match(result)) {
+      navigate('/claims');
+    } else {
+      setSubmitError((result.payload as string) || 'Failed to submit claim. Please try again.');
+    }
   };
 
   return (
@@ -50,16 +77,14 @@ const CreateClaimPage: React.FC = () => {
 
       <Card className="create-claim-card">
         <form onSubmit={handleSubmit(onSubmit)} className="claim-form">
+          {submitError && (
+            <div className="form-error" role="alert">{submitError}</div>
+          )}
+
           <Controller name="policyId" control={control} rules={{ required: 'Policy is required' }}
             render={({ field }) => (
               <Select label="Policy" required error={errors.policyId?.message}
-                options={[
-                  { value: 'POL-001', label: 'INS-7K2M4P - Emily Chen (Auto)' },
-                  { value: 'POL-002', label: 'INS-3H8J1K - Robert Garcia (Home)' },
-                  { value: 'POL-003', label: 'INS-5T9P3L - Michael Torres (Life)' },
-                  { value: 'POL-004', label: 'INS-6R1V8W - Lisa Park (Health)' },
-                  { value: 'POL-005', label: 'INS-1A4C7E - David Kim (Auto)' },
-                ]} {...field} />
+                options={policyOptions} {...field} />
             )}
           />
 

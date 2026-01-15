@@ -55,8 +55,11 @@ const CreatePolicyPage: React.FC = () => {
     if (valid) setCurrentStep((s) => Math.min(s + 1, steps.length - 1));
   };
 
+  const [submitError, setSubmitError] = useState<string | null>(null);
+
   const onSubmit = async (data: typeof values) => {
     setSubmitting(true);
+    setSubmitError(null);
     const payload: CreatePolicyPayload = {
       type: data.type,
       customerId: data.customerId,
@@ -67,9 +70,13 @@ const CreatePolicyPage: React.FC = () => {
       endDate: new Date(data.endDate).toISOString(),
       details: { description: data.description },
     };
-    await dispatch(createPolicy(payload));
+    const result = await dispatch(createPolicy(payload));
     setSubmitting(false);
-    navigate('/policies');
+    if (createPolicy.fulfilled.match(result)) {
+      navigate('/policies');
+    } else {
+      setSubmitError((result.payload as string) || 'Failed to create policy. Please try again.');
+    }
   };
 
   return (
@@ -93,6 +100,9 @@ const CreatePolicyPage: React.FC = () => {
 
       <Card className="create-policy-card">
         <form onSubmit={handleSubmit(onSubmit)}>
+          {submitError && (
+            <div className="form-error" role="alert">{submitError}</div>
+          )}
           {currentStep === 0 && (
             <div className="form-section">
               <Controller name="type" control={control} rules={{ required: 'Policy type is required' }}

@@ -4,7 +4,8 @@ import { Provider } from 'react-redux';
 
 import { store } from './store';
 import { useAppDispatch } from './store/hooks';
-import { restoreSession } from './store/authSlice';
+import { restoreSession, logoutUser } from './store/authSlice';
+import { setUnauthorizedHandler } from './services/api';
 import AppLayout from './components/layout/AppLayout';
 import ErrorBoundary from './components/feedback/ErrorBoundary';
 import LoadingSpinner from './components/feedback/LoadingSpinner';
@@ -33,6 +34,9 @@ const AppRoutes: React.FC = () => {
 
   useEffect(() => {
     dispatch(restoreSession());
+    setUnauthorizedHandler(() => {
+      dispatch(logoutUser());
+    });
   }, [dispatch]);
 
   return (
