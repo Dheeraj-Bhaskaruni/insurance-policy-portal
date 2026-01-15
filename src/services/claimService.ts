@@ -1,5 +1,5 @@
 import { Claim, CreateClaimPayload, PaginatedResponse, FilterParams } from '../types';
-import { mockClaims } from '../mocks/data';
+import { mockClaims, mockPolicies } from '../mocks/data';
 
 const delay = (ms: number) => new Promise((resolve) => setTimeout(resolve, ms));
 
@@ -46,14 +46,16 @@ export const claimService = {
 
   async createClaim(payload: CreateClaimPayload): Promise<Claim> {
     await delay(1000);
+    const policy = mockPolicies.find((p) => p.id === payload.policyId);
+    if (!policy) throw new Error('Policy not found');
     const newClaim: Claim = {
       id: `CLM-${Date.now()}`,
       claimNumber: `CLM-${Math.random().toString(36).substring(2, 8).toUpperCase()}`,
       policyId: payload.policyId,
-      policyNumber: 'INS-XXXXXX',
-      customerId: 'CUST-001',
-      customerName: 'Customer',
-      type: 'auto',
+      policyNumber: policy.policyNumber,
+      customerId: policy.customerId,
+      customerName: policy.customerName,
+      type: policy.type,
       status: 'submitted',
       amount: payload.amount,
       description: payload.description,
