@@ -35,7 +35,7 @@ const Modal: React.FC<ModalProps> = ({ isOpen, onClose, title, children, size = 
 
   return ReactDOM.createPortal(
     <div className="modal-overlay" onClick={onClose} role="dialog" aria-modal="true" aria-labelledby="modal-title">
-      <div className={`modal-content modal-${size}`} onClick={(e) => e.stopPropagation()}>
+      <div className={`modal-content modal-${size}`} onClick={(e) => e.stopPropagation()} role="document">
         <div className="modal-header">
           <h3 id="modal-title" className="modal-title">{title}</h3>
           <button className="modal-close" onClick={onClose} aria-label="Close modal">

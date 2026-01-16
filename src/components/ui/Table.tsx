@@ -63,6 +63,12 @@ function Table<T>({
                 key={col.key}
                 className={col.sortable ? 'sortable' : ''}
                 onClick={() => col.sortable && onSort?.(col.key)}
+                onKeyDown={(e) => {
+                  if (col.sortable && (e.key === 'Enter' || e.key === ' ')) {
+                    e.preventDefault();
+                    onSort?.(col.key);
+                  }
+                }}
                 role={col.sortable ? 'button' : undefined}
                 tabIndex={col.sortable ? 0 : undefined}
                 aria-sort={sortBy === col.key ? (sortOrder === 'asc' ? 'ascending' : 'descending') : undefined}
