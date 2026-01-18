@@ -1,12 +1,13 @@
 import React, { useEffect, useMemo } from 'react';
 import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, LineChart, Line, Legend } from 'recharts';
 
-import { Card } from '../../components/ui';
+import { Card, Button } from '../../components/ui';
 import { useAppDispatch, useAppSelector } from '../../store/hooks';
 import { fetchPolicies } from '../../store/policiesSlice';
 import { fetchClaims } from '../../store/claimsSlice';
 import { usePageTitle } from '../../hooks/usePageTitle';
 import { formatCurrency } from '../../utils/formatters';
+import { exportToCsv } from '../../utils/exportCsv';
 import { POLICY_TYPE_LABELS, POLICY_TYPE_COLORS } from '../../utils/constants';
 
 import './ReportsPage.css';
@@ -60,6 +61,29 @@ const ReportsPage: React.FC = () => {
           <h1 className="page-title">Reports & Analytics</h1>
           <p className="page-subtitle">Insurance operations overview and performance metrics</p>
         </div>
+        <Button
+          variant="outline"
+          onClick={() => {
+            const exportData = claimsRatioData.map((row) => {
+              const typePolicies = policies.filter(
+                (p) => POLICY_TYPE_LABELS[p.type] === row.name && p.status === 'active',
+              );
+              const totalTypePremium = typePolicies.reduce((s, p) => s + p.premiumAmount, 0);
+              const avgPremium = typePolicies.length > 0 ? totalTypePremium / typePolicies.length : 0;
+              return { name: row.name, policies: row.policies, totalPremium: totalTypePremium, avgPremium, claims: row.claims, ratio: row.ratio };
+            });
+            exportToCsv(exportData, [
+              { key: 'name', header: 'Policy Type' },
+              { key: 'policies', header: 'Active Policies' },
+              { key: 'totalPremium', header: 'Total Premium', formatter: (v) => formatCurrency(v as number) },
+              { key: 'avgPremium', header: 'Avg Premium', formatter: (v) => formatCurrency(v as number) },
+              { key: 'claims', header: 'Claims Filed' },
+              { key: 'ratio', header: 'Claims Ratio (%)' },
+            ], `insurance-report-${new Date().toISOString().split('T')[0]}`);
+          }}
+        >
+          Export CSV
+        </Button>
       </div>
 
       <div className="reports-summary">
