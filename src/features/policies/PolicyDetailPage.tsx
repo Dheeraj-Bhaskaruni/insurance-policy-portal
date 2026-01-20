@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 
-import { Card, Badge, Button, Tabs } from '../../components/ui';
+import { Card, Badge, Button, Tabs, Breadcrumb } from '../../components/ui';
 import Modal from '../../components/ui/Modal';
 import LoadingSpinner from '../../components/feedback/LoadingSpinner';
 import { useAppDispatch, useAppSelector } from '../../store/hooks';
@@ -126,11 +126,13 @@ const PolicyDetailPage: React.FC = () => {
 
   return (
     <div className="policy-detail">
-      <div className="policy-detail-header">
-        <Button variant="ghost" onClick={() => navigate('/policies')}>
-          &larr; Back to Policies
-        </Button>
-      </div>
+      <Breadcrumb
+        items={[
+          { label: 'Dashboard', to: '/' },
+          { label: 'Policies', to: '/policies' },
+          { label: policy.policyNumber },
+        ]}
+      />
 
       <Card className="policy-detail-card">
         <div className="policy-detail-top">

@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 
-import { Card, Badge, Button } from '../../components/ui';
+import { Card, Badge, Button, Breadcrumb } from '../../components/ui';
 import Modal from '../../components/ui/Modal';
 import Select from '../../components/ui/Select';
 import LoadingSpinner from '../../components/feedback/LoadingSpinner';
@@ -51,7 +51,13 @@ const ClaimDetailPage: React.FC = () => {
 
   return (
     <div className="claim-detail">
-      <Button variant="ghost" onClick={() => navigate('/claims')}>&larr; Back to Claims</Button>
+      <Breadcrumb
+        items={[
+          { label: 'Dashboard', to: '/' },
+          { label: 'Claims', to: '/claims' },
+          { label: claim.claimNumber },
+        ]}
+      />
 
       <Card className="claim-detail-card">
         <div className="claim-detail-top">

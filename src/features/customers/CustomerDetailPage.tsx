@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 
-import { Card, Badge, Button } from '../../components/ui';
+import { Card, Badge, Button, Breadcrumb } from '../../components/ui';
 import LoadingSpinner from '../../components/feedback/LoadingSpinner';
 import { useAppDispatch, useAppSelector } from '../../store/hooks';
 import { fetchCustomerById, clearSelectedCustomer } from '../../store/customersSlice';
@@ -29,7 +29,13 @@ const CustomerDetailPage: React.FC = () => {
 
   return (
     <div className="customer-detail">
-      <Button variant="ghost" onClick={() => navigate('/customers')}>&larr; Back to Customers</Button>
+      <Breadcrumb
+        items={[
+          { label: 'Dashboard', to: '/' },
+          { label: 'Customers', to: '/customers' },
+          { label: `${customer.firstName} ${customer.lastName}` },
+        ]}
+      />
 
       <Card className="customer-profile-card">
         <div className="customer-profile-header">
