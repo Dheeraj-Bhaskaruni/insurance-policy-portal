@@ -7,6 +7,7 @@ import LoadingSpinner from '../../components/feedback/LoadingSpinner';
 import { useAppDispatch, useAppSelector } from '../../store/hooks';
 import { fetchPolicyById, cancelPolicy, renewPolicy, clearSelectedPolicy } from '../../store/policiesSlice';
 import { usePageTitle } from '../../hooks/usePageTitle';
+import { useToast } from '../../hooks/useToastContext';
 import { formatCurrency, formatDate } from '../../utils/formatters';
 import { POLICY_TYPE_LABELS, POLICY_STATUS_LABELS } from '../../utils/constants';
 import { PolicyStatus } from '../../types';
@@ -25,6 +26,7 @@ const PolicyDetailPage: React.FC = () => {
   const navigate = useNavigate();
   const dispatch = useAppDispatch();
   const { selectedPolicy: policy, loading } = useAppSelector((state) => state.policies);
+  const { notify } = useToast();
   const [showCancelModal, setShowCancelModal] = useState(false);
   const [actionLoading, setActionLoading] = useState(false);
 
@@ -38,16 +40,26 @@ const PolicyDetailPage: React.FC = () => {
   const handleCancel = async () => {
     if (!policy) return;
     setActionLoading(true);
-    await dispatch(cancelPolicy(policy.id));
+    const result = await dispatch(cancelPolicy(policy.id));
     setActionLoading(false);
     setShowCancelModal(false);
+    if (cancelPolicy.fulfilled.match(result)) {
+      notify('success', `Policy ${policy.policyNumber} has been cancelled.`);
+    } else {
+      notify('error', 'Failed to cancel policy. Please try again.');
+    }
   };
 
   const handleRenew = async () => {
     if (!policy) return;
     setActionLoading(true);
-    await dispatch(renewPolicy(policy.id));
+    const result = await dispatch(renewPolicy(policy.id));
     setActionLoading(false);
+    if (renewPolicy.fulfilled.match(result)) {
+      notify('success', `Policy ${policy.policyNumber} has been renewed for another year.`);
+    } else {
+      notify('error', 'Failed to renew policy. Please try again.');
+    }
   };
 
   if (loading || !policy) {

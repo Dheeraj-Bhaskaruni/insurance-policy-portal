@@ -9,6 +9,7 @@ import { setUnauthorizedHandler } from './services/api';
 import AppLayout from './components/layout/AppLayout';
 import ErrorBoundary from './components/feedback/ErrorBoundary';
 import LoadingSpinner from './components/feedback/LoadingSpinner';
+import { ToastProvider } from './hooks/useToastContext';
 import ProtectedRoute from './features/auth/ProtectedRoute';
 import LoginPage from './features/auth/LoginPage';
 import { ROUTES } from './utils/constants';
@@ -149,9 +150,11 @@ const App: React.FC = () => {
   return (
     <Provider store={store}>
       <ErrorBoundary>
-        <BrowserRouter>
-          <AppRoutes />
-        </BrowserRouter>
+        <ToastProvider>
+          <BrowserRouter>
+            <AppRoutes />
+          </BrowserRouter>
+        </ToastProvider>
       </ErrorBoundary>
     </Provider>
   );

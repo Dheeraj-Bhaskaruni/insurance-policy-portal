@@ -8,6 +8,7 @@ import LoadingSpinner from '../../components/feedback/LoadingSpinner';
 import { useAppDispatch, useAppSelector } from '../../store/hooks';
 import { fetchClaimById, updateClaimStatus, clearSelectedClaim } from '../../store/claimsSlice';
 import { usePageTitle } from '../../hooks/usePageTitle';
+import { useToast } from '../../hooks/useToastContext';
 import { formatCurrency, formatDate, formatDateTime } from '../../utils/formatters';
 import { CLAIM_STATUS_LABELS, POLICY_TYPE_LABELS } from '../../utils/constants';
 import { ClaimStatus } from '../../types';
@@ -24,6 +25,7 @@ const ClaimDetailPage: React.FC = () => {
   const dispatch = useAppDispatch();
   const { selectedClaim: claim, loading } = useAppSelector((state) => state.claims);
   const user = useAppSelector((state) => state.auth.user);
+  const { notify } = useToast();
   const [showStatusModal, setShowStatusModal] = useState(false);
   const [newStatus, setNewStatus] = useState<ClaimStatus>('under_review');
   const [updating, setUpdating] = useState(false);
@@ -38,9 +40,14 @@ const ClaimDetailPage: React.FC = () => {
   const handleStatusUpdate = async () => {
     if (!claim) return;
     setUpdating(true);
-    await dispatch(updateClaimStatus({ id: claim.id, status: newStatus }));
+    const result = await dispatch(updateClaimStatus({ id: claim.id, status: newStatus }));
     setUpdating(false);
     setShowStatusModal(false);
+    if (updateClaimStatus.fulfilled.match(result)) {
+      notify('success', `Claim ${claim.claimNumber} status updated to ${CLAIM_STATUS_LABELS[newStatus]}.`);
+    } else {
+      notify('error', 'Failed to update claim status. Please try again.');
+    }
   };
 
   if (loading || !claim) {
