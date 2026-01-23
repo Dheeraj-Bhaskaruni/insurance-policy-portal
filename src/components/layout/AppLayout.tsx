@@ -14,7 +14,7 @@ const AppLayout: React.FC = () => {
       <Sidebar isOpen={sidebarOpen} onClose={() => setSidebarOpen(false)} />
       <div className="app-main">
         <Header onMenuToggle={() => setSidebarOpen(!sidebarOpen)} />
-        <main className="app-content">
+        <main id="main-content" className="app-content">
           <Outlet />
         </main>
       </div>
