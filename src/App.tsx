@@ -27,6 +27,7 @@ const CreateClaimPage = lazy(() => import('./features/claims/CreateClaimPage'));
 const CustomersPage = lazy(() => import('./features/customers/CustomersPage'));
 const CustomerDetailPage = lazy(() => import('./features/customers/CustomerDetailPage'));
 const ReportsPage = lazy(() => import('./features/reports/ReportsPage'));
+const SettingsPage = lazy(() => import('./features/settings/SettingsPage'));
 
 const PageLoader = () => <LoadingSpinner size="lg" message="Loading page..." />;
 
@@ -136,6 +137,14 @@ const AppRoutes: React.FC = () => {
               <ProtectedRoute allowedRoles={['admin', 'agent']}>
                 <ReportsPage />
               </ProtectedRoute>
+            </Suspense>
+          }
+        />
+        <Route
+          path={ROUTES.SETTINGS}
+          element={
+            <Suspense fallback={<PageLoader />}>
+              <SettingsPage />
             </Suspense>
           }
         />

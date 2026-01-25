@@ -17,6 +17,7 @@ const navItems = [
   { path: ROUTES.CLAIMS, label: 'Claims', icon: '\u2696' },
   { path: ROUTES.CUSTOMERS, label: 'Customers', icon: '\u263A' },
   { path: ROUTES.REPORTS, label: 'Reports', icon: '\u2261' },
+  { path: ROUTES.SETTINGS, label: 'Settings', icon: '\u2699' },
 ];
 
 const Sidebar: React.FC<SidebarProps> = ({ isOpen, onClose }) => {
