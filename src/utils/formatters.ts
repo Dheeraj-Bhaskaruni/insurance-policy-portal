@@ -1,4 +1,4 @@
-import { format, parseISO, isValid } from 'date-fns';
+import { format, parseISO, isValid, formatDistanceToNow } from 'date-fns';
 
 export const formatCurrency = (amount: number): string => {
   return new Intl.NumberFormat('en-US', {
@@ -41,4 +41,10 @@ export const capitalizeFirst = (str: string): string => {
 
 export const formatPercentage = (value: number): string => {
   return `${(value * 100).toFixed(1)}%`;
+};
+
+export const formatRelativeTime = (dateString: string): string => {
+  const date = parseISO(dateString);
+  if (!isValid(date)) return 'Unknown';
+  return formatDistanceToNow(date, { addSuffix: true });
 };

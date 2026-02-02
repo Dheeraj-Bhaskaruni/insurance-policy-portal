@@ -1,11 +1,11 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useCallback, useState } from 'react';
 
-import { Card } from '../../components/ui';
+import { Card, Button } from '../../components/ui';
 import LoadingSpinner from '../../components/feedback/LoadingSpinner';
 import { useAppDispatch, useAppSelector } from '../../store/hooks';
 import { fetchDashboardData } from '../../store/dashboardSlice';
 import { usePageTitle } from '../../hooks/usePageTitle';
-import { formatCurrency, formatDateTime } from '../../utils/formatters';
+import { formatCurrency, formatRelativeTime } from '../../utils/formatters';
 
 import MetricCard from './MetricCard';
 import PolicyChart from './PolicyChart';
@@ -21,9 +21,18 @@ const DashboardPage: React.FC = () => {
     (state) => state.dashboard,
   );
 
-  useEffect(() => {
+  const [lastRefresh, setLastRefresh] = useState<Date>(new Date());
+
+  const refreshDashboard = useCallback(() => {
     dispatch(fetchDashboardData());
+    setLastRefresh(new Date());
   }, [dispatch]);
+
+  useEffect(() => {
+    refreshDashboard();
+    const interval = setInterval(refreshDashboard, 5 * 60 * 1000);
+    return () => clearInterval(interval);
+  }, [refreshDashboard]);
 
   if (loading && !metrics) {
     return <LoadingSpinner size="lg" message="Loading dashboard..." />;
@@ -36,6 +45,9 @@ const DashboardPage: React.FC = () => {
           <h1 className="page-title">Dashboard</h1>
           <p className="page-subtitle">Overview of your insurance operations</p>
         </div>
+        <Button variant="ghost" size="sm" onClick={refreshDashboard} disabled={loading}>
+          {loading ? 'Refreshing...' : 'Refresh'}
+        </Button>
       </div>
 
       {metrics && (
