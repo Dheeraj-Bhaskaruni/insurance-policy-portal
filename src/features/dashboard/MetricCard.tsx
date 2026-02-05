@@ -29,4 +29,4 @@ const MetricCard: React.FC<MetricCardProps> = ({ title, value, subtitle, color }
   );
 };
 
-export default MetricCard;
+export default React.memo(MetricCard);

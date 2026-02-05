@@ -1,7 +1,7 @@
 import React from 'react';
 
 import { ActivityItem } from '../../types';
-import { formatDateTime } from '../../utils/formatters';
+import { formatRelativeTime } from '../../utils/formatters';
 
 import './ActivityFeed.css';
 
@@ -29,7 +29,7 @@ const ActivityFeed: React.FC<ActivityFeedProps> = ({ activities }) => {
             </div>
             <div className="activity-content">
               <p className="activity-description">{activity.description}</p>
-              <span className="activity-time">{formatDateTime(activity.timestamp)}</span>
+              <span className="activity-time">{formatRelativeTime(activity.timestamp)}</span>
             </div>
           </div>
         );
@@ -38,4 +38,4 @@ const ActivityFeed: React.FC<ActivityFeedProps> = ({ activities }) => {
   );
 };
 
-export default ActivityFeed;
+export default React.memo(ActivityFeed);

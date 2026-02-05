@@ -32,4 +32,4 @@ const PolicyChart: React.FC<PolicyChartProps> = ({ data }) => {
   );
 };
 
-export default PolicyChart;
+export default React.memo(PolicyChart);

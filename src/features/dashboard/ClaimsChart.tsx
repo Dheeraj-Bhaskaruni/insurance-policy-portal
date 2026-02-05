@@ -25,4 +25,4 @@ const ClaimsChart: React.FC<ClaimsChartProps> = ({ data }) => {
   );
 };
 
-export default ClaimsChart;
+export default React.memo(ClaimsChart);
