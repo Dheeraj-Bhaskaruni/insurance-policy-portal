@@ -8,6 +8,10 @@ export const policyService = {
     await delay(600);
     let filtered = [...mockPolicies];
 
+    if (params.customerId) {
+      filtered = filtered.filter((p) => p.customerId === params.customerId);
+    }
+
     if (params.search) {
       const q = params.search.toLowerCase();
       filtered = filtered.filter(

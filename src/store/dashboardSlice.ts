@@ -23,13 +23,13 @@ const initialState: DashboardState = {
 
 export const fetchDashboardData = createAsyncThunk(
   'dashboard/fetchAll',
-  async (_, { rejectWithValue }) => {
+  async (customerId: string | undefined, { rejectWithValue }) => {
     try {
       const [metrics, recentActivity, policyDistribution, claimsOverview] = await Promise.all([
-        dashboardService.getMetrics(),
-        dashboardService.getRecentActivity(),
-        dashboardService.getPolicyDistribution(),
-        dashboardService.getClaimsOverview(),
+        dashboardService.getMetrics(customerId),
+        dashboardService.getRecentActivity(customerId),
+        dashboardService.getPolicyDistribution(customerId),
+        dashboardService.getClaimsOverview(customerId),
       ]);
       return { metrics, recentActivity, policyDistribution, claimsOverview };
     } catch (error) {

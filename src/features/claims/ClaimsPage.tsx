@@ -5,6 +5,7 @@ import { Card, Button, Badge, SearchBar, Table, Pagination } from '../../compone
 import Select from '../../components/ui/Select';
 import { useAppDispatch, useAppSelector } from '../../store/hooks';
 import { fetchClaims, setClaimFilters } from '../../store/claimsSlice';
+import { selectCurrentUser } from '../../store/selectors';
 import { usePageTitle } from '../../hooks/usePageTitle';
 import { formatCurrency, formatDate } from '../../utils/formatters';
 import { CLAIM_STATUS_LABELS, POLICY_TYPE_LABELS } from '../../utils/constants';
@@ -24,13 +25,17 @@ const ClaimsPage: React.FC = () => {
   usePageTitle('Claims');
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
+  const user = useAppSelector(selectCurrentUser);
   const { items, total, page, totalPages, loading, filters } = useAppSelector((state) => state.claims);
   const [sortBy, setSortBy] = useState<string>('');
   const [sortOrder, setSortOrder] = useState<'asc' | 'desc'>('desc');
 
+  const isCustomer = user?.role === 'customer';
+
   useEffect(() => {
-    dispatch(fetchClaims(filters));
-  }, [dispatch, filters]);
+    const params = isCustomer ? { ...filters, customerId: user?.customerId } : filters;
+    dispatch(fetchClaims(params));
+  }, [dispatch, filters, isCustomer, user?.customerId]);
 
   const handleSearch = useCallback(
     (query: string) => dispatch(setClaimFilters({ search: query, page: 1 })),

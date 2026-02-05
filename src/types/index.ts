@@ -13,6 +13,7 @@ export interface User {
   role: UserRole;
   avatar?: string;
   phone?: string;
+  customerId?: string;
   createdAt: string;
 }
 
@@ -208,4 +209,5 @@ export interface FilterParams {
   pageSize?: number;
   sortBy?: string;
   sortOrder?: 'asc' | 'desc';
+  customerId?: string;
 }

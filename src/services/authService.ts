@@ -30,6 +30,7 @@ const MOCK_USERS: Array<User & { password: string }> = [
     lastName: 'Chen',
     role: 'customer',
     phone: '555-0103',
+    customerId: 'CUST-001',
     createdAt: '2024-06-10T08:00:00Z',
   },
 ];

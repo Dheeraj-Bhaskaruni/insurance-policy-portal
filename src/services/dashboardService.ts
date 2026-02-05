@@ -4,42 +4,50 @@ import { mockPolicies, mockClaims, mockCustomers } from '../mocks/data';
 const delay = (ms: number) => new Promise((resolve) => setTimeout(resolve, ms));
 
 export const dashboardService = {
-  async getMetrics(): Promise<DashboardMetrics> {
+  async getMetrics(customerId?: string): Promise<DashboardMetrics> {
     await delay(500);
-    const activePolicies = mockPolicies.filter((p) => p.status === 'active').length;
-    const pendingClaims = mockClaims.filter((c) => c.status === 'submitted' || c.status === 'under_review').length;
-    const totalPremium = mockPolicies
+    const policies = customerId ? mockPolicies.filter((p) => p.customerId === customerId) : mockPolicies;
+    const claims = customerId ? mockClaims.filter((c) => c.customerId === customerId) : mockClaims;
+
+    const activePolicies = policies.filter((p) => p.status === 'active').length;
+    const pendingClaims = claims.filter((c) => c.status === 'submitted' || c.status === 'under_review').length;
+    const totalPremium = policies
       .filter((p) => p.status === 'active')
       .reduce((sum, p) => sum + p.premiumAmount, 0);
-    const claimsRatio = mockClaims.length / Math.max(mockPolicies.length, 1);
+    const claimsRatio = claims.length / Math.max(policies.length, 1);
 
     return {
-      totalPolicies: mockPolicies.length,
+      totalPolicies: policies.length,
       activePolicies,
       pendingClaims,
       totalPremiumCollected: totalPremium,
       claimsRatio,
-      customerCount: mockCustomers.length,
+      customerCount: customerId ? 1 : mockCustomers.length,
     };
   },
 
-  async getRecentActivity(): Promise<ActivityItem[]> {
+  async getRecentActivity(customerId?: string): Promise<ActivityItem[]> {
     await delay(400);
-    return [
-      { id: '1', type: 'policy_created', description: 'New auto policy INS-7K2M4P created for Emily Chen', timestamp: '2026-03-25T14:30:00Z', userId: '2' },
-      { id: '2', type: 'claim_filed', description: 'Claim CLM-9X3B2R filed for water damage on policy INS-3H8J1K', timestamp: '2026-03-25T11:15:00Z', userId: '3' },
-      { id: '3', type: 'claim_resolved', description: 'Claim CLM-4W7N5Q approved and settled for $12,500', timestamp: '2026-03-24T16:45:00Z', userId: '1' },
-      { id: '4', type: 'payment_received', description: 'Premium payment of $2,400 received from Robert Garcia', timestamp: '2026-03-24T09:00:00Z', userId: '2' },
-      { id: '5', type: 'policy_renewed', description: 'Home policy INS-5T9P3L renewed for another year', timestamp: '2026-03-23T13:20:00Z', userId: '2' },
-      { id: '6', type: 'claim_filed', description: 'Claim CLM-8D2K6M filed for auto collision on policy INS-1A4C7E', timestamp: '2026-03-23T10:00:00Z', userId: '3' },
-      { id: '7', type: 'policy_created', description: 'New health policy INS-6R1V8W created for Lisa Park', timestamp: '2026-03-22T15:30:00Z', userId: '2' },
-      { id: '8', type: 'payment_received', description: 'Premium payment of $1,850 received from Michael Torres', timestamp: '2026-03-22T08:45:00Z', userId: '2' },
+    const activities: (ActivityItem & { customerId?: string })[] = [
+      { id: '1', type: 'policy_created', description: 'New auto policy INS-7K2M4P created for Emily Chen', timestamp: '2026-03-25T14:30:00Z', userId: '2', customerId: 'CUST-001' },
+      { id: '2', type: 'claim_filed', description: 'Claim CLM-9X3B2R filed for water damage on policy INS-3H8J1K', timestamp: '2026-03-25T11:15:00Z', userId: '3', customerId: 'CUST-002' },
+      { id: '3', type: 'claim_resolved', description: 'Claim CLM-4W7N5Q approved and settled for $12,500', timestamp: '2026-03-24T16:45:00Z', userId: '1', customerId: 'CUST-001' },
+      { id: '4', type: 'payment_received', description: 'Premium payment of $2,400 received from Robert Garcia', timestamp: '2026-03-24T09:00:00Z', userId: '2', customerId: 'CUST-002' },
+      { id: '5', type: 'policy_renewed', description: 'Home policy INS-5T9P3L renewed for another year', timestamp: '2026-03-23T13:20:00Z', userId: '2', customerId: 'CUST-003' },
+      { id: '6', type: 'claim_filed', description: 'Claim CLM-8D2K6M filed for auto collision on policy INS-1A4C7E', timestamp: '2026-03-23T10:00:00Z', userId: '3', customerId: 'CUST-005' },
+      { id: '7', type: 'policy_created', description: 'New health policy INS-6R1V8W created for Lisa Park', timestamp: '2026-03-22T15:30:00Z', userId: '2', customerId: 'CUST-004' },
+      { id: '8', type: 'payment_received', description: 'Premium payment of $1,850 received from Michael Torres', timestamp: '2026-03-22T08:45:00Z', userId: '2', customerId: 'CUST-003' },
     ];
+    if (customerId) {
+      return activities.filter((a) => a.customerId === customerId);
+    }
+    return activities;
   },
 
-  async getPolicyDistribution(): Promise<Array<{ name: string; value: number; color: string }>> {
+  async getPolicyDistribution(customerId?: string): Promise<Array<{ name: string; value: number; color: string }>> {
     await delay(300);
-    const dist = mockPolicies.reduce(
+    const policies = customerId ? mockPolicies.filter((p) => p.customerId === customerId) : mockPolicies;
+    const dist = policies.reduce(
       (acc, p) => {
         acc[p.type] = (acc[p.type] || 0) + 1;
         return acc;
@@ -54,9 +62,10 @@ export const dashboardService = {
     }));
   },
 
-  async getClaimsOverview(): Promise<Array<{ name: string; value: number; color: string }>> {
+  async getClaimsOverview(customerId?: string): Promise<Array<{ name: string; value: number; color: string }>> {
     await delay(300);
-    const dist = mockClaims.reduce(
+    const claims = customerId ? mockClaims.filter((c) => c.customerId === customerId) : mockClaims;
+    const dist = claims.reduce(
       (acc, c) => {
         acc[c.status] = (acc[c.status] || 0) + 1;
         return acc;

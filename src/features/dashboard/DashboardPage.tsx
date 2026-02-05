@@ -4,6 +4,7 @@ import { Card, Button } from '../../components/ui';
 import LoadingSpinner from '../../components/feedback/LoadingSpinner';
 import { useAppDispatch, useAppSelector } from '../../store/hooks';
 import { fetchDashboardData } from '../../store/dashboardSlice';
+import { selectCurrentUser } from '../../store/selectors';
 import { usePageTitle } from '../../hooks/usePageTitle';
 import { formatCurrency, formatRelativeTime } from '../../utils/formatters';
 
@@ -17,16 +18,18 @@ import './DashboardPage.css';
 const DashboardPage: React.FC = () => {
   usePageTitle('Dashboard');
   const dispatch = useAppDispatch();
+  const user = useAppSelector(selectCurrentUser);
   const { metrics, recentActivity, policyDistribution, claimsOverview, loading } = useAppSelector(
     (state) => state.dashboard,
   );
 
+  const customerId = user?.role === 'customer' ? user.customerId : undefined;
   const [lastRefresh, setLastRefresh] = useState<Date>(new Date());
 
   const refreshDashboard = useCallback(() => {
-    dispatch(fetchDashboardData());
+    dispatch(fetchDashboardData(customerId));
     setLastRefresh(new Date());
-  }, [dispatch]);
+  }, [dispatch, customerId]);
 
   useEffect(() => {
     refreshDashboard();

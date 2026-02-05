@@ -35,7 +35,7 @@ const Sidebar: React.FC<SidebarProps> = ({ isOpen, onClose }) => {
 
         <nav className="sidebar-nav">
           {navItems.map((item) => {
-            if (item.path === ROUTES.REPORTS && user?.role === 'customer') return null;
+            if ((item.path === ROUTES.REPORTS || item.path === ROUTES.CUSTOMERS) && user?.role === 'customer') return null;
             return (
               <NavLink
                 key={item.path}

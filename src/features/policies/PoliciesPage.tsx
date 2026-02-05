@@ -5,6 +5,7 @@ import { Card, Button, Badge, SearchBar, Table, Pagination } from '../../compone
 import Select from '../../components/ui/Select';
 import { useAppDispatch, useAppSelector } from '../../store/hooks';
 import { fetchPolicies, setFilters } from '../../store/policiesSlice';
+import { selectCurrentUser } from '../../store/selectors';
 import { usePageTitle } from '../../hooks/usePageTitle';
 import { formatCurrency, formatDate } from '../../utils/formatters';
 import { POLICY_TYPE_LABELS, POLICY_STATUS_LABELS } from '../../utils/constants';
@@ -23,13 +24,17 @@ const PoliciesPage: React.FC = () => {
   usePageTitle('Policies');
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
+  const user = useAppSelector(selectCurrentUser);
   const { items, total, page, totalPages, loading, filters } = useAppSelector((state) => state.policies);
   const [sortBy, setSortBy] = useState<string>('');
   const [sortOrder, setSortOrder] = useState<'asc' | 'desc'>('asc');
 
+  const isCustomer = user?.role === 'customer';
+
   useEffect(() => {
-    dispatch(fetchPolicies(filters));
-  }, [dispatch, filters]);
+    const params = isCustomer ? { ...filters, customerId: user?.customerId } : filters;
+    dispatch(fetchPolicies(params));
+  }, [dispatch, filters, isCustomer, user?.customerId]);
 
   const handleSearch = useCallback(
     (query: string) => {
@@ -110,9 +115,11 @@ const PoliciesPage: React.FC = () => {
           <h1 className="page-title">Policies</h1>
           <p className="page-subtitle">{total} total policies</p>
         </div>
-        <Button variant="primary" onClick={() => navigate('/policies/new')}>
-          + New Policy
-        </Button>
+        {!isCustomer && (
+          <Button variant="primary" onClick={() => navigate('/policies/new')}>
+            + New Policy
+          </Button>
+        )}
       </div>
 
       <Card padding="none" className="policies-card">

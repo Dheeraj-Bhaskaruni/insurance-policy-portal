@@ -8,6 +8,10 @@ export const claimService = {
     await delay(600);
     let filtered = [...mockClaims];
 
+    if (params.customerId) {
+      filtered = filtered.filter((c) => c.customerId === params.customerId);
+    }
+
     if (params.search) {
       const q = params.search.toLowerCase();
       filtered = filtered.filter(
