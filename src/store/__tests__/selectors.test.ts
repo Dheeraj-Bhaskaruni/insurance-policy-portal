@@ -1,5 +1,7 @@
 import { describe, it, expect } from 'vitest';
 
+import { Policy, Claim, User } from '../../types';
+import { RootState } from '../index';
 import {
   selectActivePolicies,
   selectTotalPremium,
@@ -8,8 +10,6 @@ import {
   selectClaimsByStatus,
   selectUserRole,
 } from '../selectors';
-import { RootState } from '../index';
-import { Policy, Claim, User } from '../../types';
 
 const makePolicy = (overrides: Partial<Policy> = {}): Policy => ({
   id: 'p1',

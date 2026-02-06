@@ -3,13 +3,13 @@ import { useNavigate } from 'react-router-dom';
 
 import { Card, Button, Badge, SearchBar, Table, Pagination } from '../../components/ui';
 import Select from '../../components/ui/Select';
-import { useAppDispatch, useAppSelector } from '../../store/hooks';
-import { fetchClaims, setClaimFilters } from '../../store/claimsSlice';
-import { selectCurrentUser } from '../../store/selectors';
 import { usePageTitle } from '../../hooks/usePageTitle';
-import { formatCurrency, formatDate } from '../../utils/formatters';
-import { CLAIM_STATUS_LABELS, POLICY_TYPE_LABELS } from '../../utils/constants';
+import { fetchClaims, setClaimFilters } from '../../store/claimsSlice';
+import { useAppDispatch, useAppSelector } from '../../store/hooks';
+import { selectCurrentUser } from '../../store/selectors';
 import { Claim, ClaimStatus } from '../../types';
+import { CLAIM_STATUS_LABELS, POLICY_TYPE_LABELS } from '../../utils/constants';
+import { formatCurrency, formatDate } from '../../utils/formatters';
 
 import './ClaimsPage.css';
 

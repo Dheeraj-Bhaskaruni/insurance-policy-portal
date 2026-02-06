@@ -1,5 +1,5 @@
-import { Claim, CreateClaimPayload, PaginatedResponse, FilterParams } from '../types';
 import { mockClaims, mockPolicies } from '../mocks/data';
+import { Claim, CreateClaimPayload, PaginatedResponse, FilterParams } from '../types';
 
 const delay = (ms: number) => new Promise((resolve) => setTimeout(resolve, ms));
 

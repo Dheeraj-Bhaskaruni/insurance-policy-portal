@@ -1,12 +1,12 @@
 import React from 'react';
 
-import { Card, Button } from '../../components/ui';
+import { Card } from '../../components/ui';
+import { useLocalStorage } from '../../hooks/useLocalStorage';
+import { usePageTitle } from '../../hooks/usePageTitle';
 import { useAppSelector } from '../../store/hooks';
 import { selectCurrentUser } from '../../store/selectors';
-import { usePageTitle } from '../../hooks/usePageTitle';
-import { useLocalStorage } from '../../hooks/useLocalStorage';
-import { formatDate } from '../../utils/formatters';
 import { DEFAULT_PAGE_SIZE, PAGE_SIZES } from '../../utils/constants';
+import { formatDate } from '../../utils/formatters';
 
 import './SettingsPage.css';
 
@@ -78,7 +78,7 @@ const SettingsPage: React.FC = () => {
                 <span className="settings-option-label">Compact Mode</span>
                 <span className="settings-option-desc">Reduce spacing in tables and lists</span>
               </div>
-              <label className="settings-toggle">
+              <label className="settings-toggle" aria-label="Compact Mode">
                 <input
                   type="checkbox"
                   checked={compactMode}
@@ -93,7 +93,7 @@ const SettingsPage: React.FC = () => {
                 <span className="settings-option-label">Email Notifications</span>
                 <span className="settings-option-desc">Receive email updates about policy changes</span>
               </div>
-              <label className="settings-toggle">
+              <label className="settings-toggle" aria-label="Email Notifications">
                 <input
                   type="checkbox"
                   checked={emailNotifications}

@@ -2,11 +2,11 @@ import React, { useEffect, useCallback } from 'react';
 import { useNavigate } from 'react-router-dom';
 
 import { Card, SearchBar, Table, Pagination } from '../../components/ui';
-import { useAppDispatch, useAppSelector } from '../../store/hooks';
-import { fetchCustomers } from '../../store/customersSlice';
 import { usePageTitle } from '../../hooks/usePageTitle';
-import { formatCurrency, formatPhoneNumber } from '../../utils/formatters';
+import { fetchCustomers } from '../../store/customersSlice';
+import { useAppDispatch, useAppSelector } from '../../store/hooks';
 import { Customer } from '../../types';
+import { formatCurrency, formatPhoneNumber } from '../../utils/formatters';
 
 import './CustomersPage.css';
 

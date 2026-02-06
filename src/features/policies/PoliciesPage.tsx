@@ -3,13 +3,13 @@ import { useNavigate } from 'react-router-dom';
 
 import { Card, Button, Badge, SearchBar, Table, Pagination } from '../../components/ui';
 import Select from '../../components/ui/Select';
+import { usePageTitle } from '../../hooks/usePageTitle';
 import { useAppDispatch, useAppSelector } from '../../store/hooks';
 import { fetchPolicies, setFilters } from '../../store/policiesSlice';
 import { selectCurrentUser } from '../../store/selectors';
-import { usePageTitle } from '../../hooks/usePageTitle';
-import { formatCurrency, formatDate } from '../../utils/formatters';
+import { Policy, PolicyStatus } from '../../types';
 import { POLICY_TYPE_LABELS, POLICY_STATUS_LABELS } from '../../utils/constants';
-import { Policy, PolicyStatus, PolicyType } from '../../types';
+import { formatCurrency, formatDate } from '../../utils/formatters';
 
 import './PoliciesPage.css';
 

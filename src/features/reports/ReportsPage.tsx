@@ -1,14 +1,14 @@
 import React, { useEffect, useMemo } from 'react';
-import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, LineChart, Line, Legend } from 'recharts';
+import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, Legend } from 'recharts';
 
 import { Card, Button } from '../../components/ui';
+import { usePageTitle } from '../../hooks/usePageTitle';
+import { fetchClaims } from '../../store/claimsSlice';
 import { useAppDispatch, useAppSelector } from '../../store/hooks';
 import { fetchPolicies } from '../../store/policiesSlice';
-import { fetchClaims } from '../../store/claimsSlice';
-import { usePageTitle } from '../../hooks/usePageTitle';
-import { formatCurrency } from '../../utils/formatters';
-import { exportToCsv } from '../../utils/exportCsv';
 import { POLICY_TYPE_LABELS, POLICY_TYPE_COLORS } from '../../utils/constants';
+import { exportToCsv } from '../../utils/exportCsv';
+import { formatCurrency } from '../../utils/formatters';
 
 import './ReportsPage.css';
 

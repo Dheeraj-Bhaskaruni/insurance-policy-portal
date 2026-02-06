@@ -1,5 +1,5 @@
-import { Policy, CreatePolicyPayload, PaginatedResponse, FilterParams } from '../types';
 import { mockPolicies } from '../mocks/data';
+import { Policy, CreatePolicyPayload, PaginatedResponse, FilterParams } from '../types';
 
 const delay = (ms: number) => new Promise((resolve) => setTimeout(resolve, ms));
 

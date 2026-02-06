@@ -1,17 +1,17 @@
-import React, { useEffect, useCallback, useState } from 'react';
+import React, { useEffect, useCallback } from 'react';
 
-import { Card, Button } from '../../components/ui';
 import LoadingSpinner from '../../components/feedback/LoadingSpinner';
-import { useAppDispatch, useAppSelector } from '../../store/hooks';
-import { fetchDashboardData } from '../../store/dashboardSlice';
-import { selectCurrentUser } from '../../store/selectors';
+import { Card, Button } from '../../components/ui';
 import { usePageTitle } from '../../hooks/usePageTitle';
-import { formatCurrency, formatRelativeTime } from '../../utils/formatters';
+import { fetchDashboardData } from '../../store/dashboardSlice';
+import { useAppDispatch, useAppSelector } from '../../store/hooks';
+import { selectCurrentUser } from '../../store/selectors';
+import { formatCurrency } from '../../utils/formatters';
 
+import ActivityFeed from './ActivityFeed';
+import ClaimsChart from './ClaimsChart';
 import MetricCard from './MetricCard';
 import PolicyChart from './PolicyChart';
-import ClaimsChart from './ClaimsChart';
-import ActivityFeed from './ActivityFeed';
 
 import './DashboardPage.css';
 
@@ -24,11 +24,8 @@ const DashboardPage: React.FC = () => {
   );
 
   const customerId = user?.role === 'customer' ? user.customerId : undefined;
-  const [lastRefresh, setLastRefresh] = useState<Date>(new Date());
-
   const refreshDashboard = useCallback(() => {
     dispatch(fetchDashboardData(customerId));
-    setLastRefresh(new Date());
   }, [dispatch, customerId]);
 
   useEffect(() => {

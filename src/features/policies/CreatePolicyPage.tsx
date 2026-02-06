@@ -1,13 +1,13 @@
 import React, { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
 import { useForm, Controller } from 'react-hook-form';
+import { useNavigate } from 'react-router-dom';
 
 import { Card, Button } from '../../components/ui';
 import Input from '../../components/ui/Input';
 import Select from '../../components/ui/Select';
+import { usePageTitle } from '../../hooks/usePageTitle';
 import { useAppDispatch } from '../../store/hooks';
 import { createPolicy } from '../../store/policiesSlice';
-import { usePageTitle } from '../../hooks/usePageTitle';
 import { CreatePolicyPayload, PolicyType } from '../../types';
 import { POLICY_TYPE_LABELS } from '../../utils/constants';
 

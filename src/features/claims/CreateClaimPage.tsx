@@ -1,15 +1,15 @@
 import React, { useEffect, useMemo, useState } from 'react';
-import { useNavigate } from 'react-router-dom';
 import { useForm, Controller } from 'react-hook-form';
+import { useNavigate } from 'react-router-dom';
 
 import { Card, Button } from '../../components/ui';
 import Input from '../../components/ui/Input';
 import Select from '../../components/ui/Select';
-import { useAppDispatch, useAppSelector } from '../../store/hooks';
+import { usePageTitle } from '../../hooks/usePageTitle';
 import { createClaim } from '../../store/claimsSlice';
+import { useAppDispatch, useAppSelector } from '../../store/hooks';
 import { fetchPolicies } from '../../store/policiesSlice';
 import { selectPolicyItems } from '../../store/selectors';
-import { usePageTitle } from '../../hooks/usePageTitle';
 import { POLICY_TYPE_LABELS } from '../../utils/constants';
 
 import './CreateClaimPage.css';

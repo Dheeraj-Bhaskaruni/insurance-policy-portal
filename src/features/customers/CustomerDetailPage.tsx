@@ -1,18 +1,17 @@
 import React, { useEffect } from 'react';
-import { useParams, useNavigate } from 'react-router-dom';
+import { useParams } from 'react-router-dom';
 
-import { Card, Badge, Button, Breadcrumb } from '../../components/ui';
 import LoadingSpinner from '../../components/feedback/LoadingSpinner';
-import { useAppDispatch, useAppSelector } from '../../store/hooks';
-import { fetchCustomerById, clearSelectedCustomer } from '../../store/customersSlice';
+import { Card, Badge, Breadcrumb } from '../../components/ui';
 import { usePageTitle } from '../../hooks/usePageTitle';
+import { fetchCustomerById, clearSelectedCustomer } from '../../store/customersSlice';
+import { useAppDispatch, useAppSelector } from '../../store/hooks';
 import { formatCurrency, formatPhoneNumber, formatDate } from '../../utils/formatters';
 
 import './CustomerDetailPage.css';
 
 const CustomerDetailPage: React.FC = () => {
   const { id } = useParams<{ id: string }>();
-  const navigate = useNavigate();
   const dispatch = useAppDispatch();
   const { selectedCustomer: customer, loading } = useAppSelector((state) => state.customers);
 

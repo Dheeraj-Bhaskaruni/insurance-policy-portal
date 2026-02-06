@@ -1,17 +1,17 @@
 import React, { Suspense, lazy, useEffect } from 'react';
-import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom';
 import { Provider } from 'react-redux';
+import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom';
 
-import { store } from './store';
-import { useAppDispatch } from './store/hooks';
-import { restoreSession, logoutUser } from './store/authSlice';
-import { setUnauthorizedHandler } from './services/api';
-import AppLayout from './components/layout/AppLayout';
 import ErrorBoundary from './components/feedback/ErrorBoundary';
 import LoadingSpinner from './components/feedback/LoadingSpinner';
-import { ToastProvider } from './hooks/useToastContext';
-import ProtectedRoute from './features/auth/ProtectedRoute';
+import AppLayout from './components/layout/AppLayout';
 import LoginPage from './features/auth/LoginPage';
+import ProtectedRoute from './features/auth/ProtectedRoute';
+import { ToastProvider } from './hooks/useToastContext';
+import { setUnauthorizedHandler } from './services/api';
+import { store } from './store';
+import { restoreSession, logoutUser } from './store/authSlice';
+import { useAppDispatch } from './store/hooks';
 import { ROUTES } from './utils/constants';
 
 import './assets/styles/global.css';

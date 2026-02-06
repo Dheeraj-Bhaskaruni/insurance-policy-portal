@@ -1,5 +1,5 @@
-import { Customer, PaginatedResponse, FilterParams } from '../types';
 import { mockCustomers } from '../mocks/data';
+import { Customer, PaginatedResponse, FilterParams } from '../types';
 
 const delay = (ms: number) => new Promise((resolve) => setTimeout(resolve, ms));
 

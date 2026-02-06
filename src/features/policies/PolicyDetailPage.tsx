@@ -1,16 +1,16 @@
 import React, { useEffect, useState } from 'react';
-import { useParams, useNavigate } from 'react-router-dom';
+import { useParams } from 'react-router-dom';
 
+import LoadingSpinner from '../../components/feedback/LoadingSpinner';
 import { Card, Badge, Button, Tabs, Breadcrumb } from '../../components/ui';
 import Modal from '../../components/ui/Modal';
-import LoadingSpinner from '../../components/feedback/LoadingSpinner';
-import { useAppDispatch, useAppSelector } from '../../store/hooks';
-import { fetchPolicyById, cancelPolicy, renewPolicy, clearSelectedPolicy } from '../../store/policiesSlice';
 import { usePageTitle } from '../../hooks/usePageTitle';
 import { useToast } from '../../hooks/useToastContext';
-import { formatCurrency, formatDate } from '../../utils/formatters';
-import { POLICY_TYPE_LABELS, POLICY_STATUS_LABELS } from '../../utils/constants';
+import { useAppDispatch, useAppSelector } from '../../store/hooks';
+import { fetchPolicyById, cancelPolicy, renewPolicy, clearSelectedPolicy } from '../../store/policiesSlice';
 import { PolicyStatus } from '../../types';
+import { POLICY_TYPE_LABELS, POLICY_STATUS_LABELS } from '../../utils/constants';
+import { formatCurrency, formatDate } from '../../utils/formatters';
 
 import './PolicyDetailPage.css';
 
@@ -23,7 +23,6 @@ const statusBadgeVariant: Record<PolicyStatus, 'success' | 'warning' | 'danger' 
 
 const PolicyDetailPage: React.FC = () => {
   const { id } = useParams<{ id: string }>();
-  const navigate = useNavigate();
   const dispatch = useAppDispatch();
   const { selectedPolicy: policy, loading } = useAppSelector((state) => state.policies);
   const { notify } = useToast();

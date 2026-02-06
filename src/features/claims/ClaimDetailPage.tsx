@@ -1,17 +1,17 @@
 import React, { useEffect, useState } from 'react';
-import { useParams, useNavigate } from 'react-router-dom';
+import { useParams } from 'react-router-dom';
 
+import LoadingSpinner from '../../components/feedback/LoadingSpinner';
 import { Card, Badge, Button, Breadcrumb } from '../../components/ui';
 import Modal from '../../components/ui/Modal';
 import Select from '../../components/ui/Select';
-import LoadingSpinner from '../../components/feedback/LoadingSpinner';
-import { useAppDispatch, useAppSelector } from '../../store/hooks';
-import { fetchClaimById, updateClaimStatus, clearSelectedClaim } from '../../store/claimsSlice';
 import { usePageTitle } from '../../hooks/usePageTitle';
 import { useToast } from '../../hooks/useToastContext';
-import { formatCurrency, formatDate, formatDateTime } from '../../utils/formatters';
-import { CLAIM_STATUS_LABELS, POLICY_TYPE_LABELS } from '../../utils/constants';
+import { fetchClaimById, updateClaimStatus, clearSelectedClaim } from '../../store/claimsSlice';
+import { useAppDispatch, useAppSelector } from '../../store/hooks';
 import { ClaimStatus } from '../../types';
+import { CLAIM_STATUS_LABELS, POLICY_TYPE_LABELS } from '../../utils/constants';
+import { formatCurrency, formatDate, formatDateTime } from '../../utils/formatters';
 
 import './ClaimDetailPage.css';
 
@@ -21,7 +21,6 @@ const statusBadgeVariant: Record<ClaimStatus, 'success' | 'warning' | 'danger' |
 
 const ClaimDetailPage: React.FC = () => {
   const { id } = useParams<{ id: string }>();
-  const navigate = useNavigate();
   const dispatch = useAppDispatch();
   const { selectedClaim: claim, loading } = useAppSelector((state) => state.claims);
   const user = useAppSelector((state) => state.auth.user);

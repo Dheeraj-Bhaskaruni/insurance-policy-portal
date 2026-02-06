@@ -1,7 +1,7 @@
 import React from 'react';
 
-import { useAppDispatch, useAppSelector } from '../../store/hooks';
 import { logoutUser } from '../../store/authSlice';
+import { useAppDispatch, useAppSelector } from '../../store/hooks';
 import { selectCurrentUser } from '../../store/selectors';
 import Button from '../ui/Button';
 

@@ -1,5 +1,5 @@
-import { DashboardMetrics, ActivityItem } from '../types';
 import { mockPolicies, mockClaims, mockCustomers } from '../mocks/data';
+import { DashboardMetrics, ActivityItem } from '../types';
 
 const delay = (ms: number) => new Promise((resolve) => setTimeout(resolve, ms));
 

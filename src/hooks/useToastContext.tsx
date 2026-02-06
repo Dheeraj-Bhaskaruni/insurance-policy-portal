@@ -1,6 +1,7 @@
 import React, { createContext, useContext } from 'react';
 
 import Toast from '../components/feedback/Toast';
+
 import { useNotification, NotificationType } from './useNotification';
 
 interface ToastContextValue {
