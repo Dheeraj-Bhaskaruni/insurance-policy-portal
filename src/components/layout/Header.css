@@ -44,6 +44,10 @@
 }
 
 @media (max-width: 768px) {
-  .header-menu-btn { display: block; }
-  .header-welcome { font-size: var(--font-size-sm); }
+  .header-menu-btn {
+    display: block;
+  }
+  .header-welcome {
+    font-size: var(--font-size-sm);
+  }
 }

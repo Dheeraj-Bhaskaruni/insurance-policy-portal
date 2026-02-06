@@ -45,7 +45,11 @@ const Select: React.FC<SelectProps> = ({
           </option>
         ))}
       </select>
-      {error && <span className="select-error-text" role="alert">{error}</span>}
+      {error && (
+        <span className="select-error-text" role="alert">
+          {error}
+        </span>
+      )}
     </div>
   );
 };

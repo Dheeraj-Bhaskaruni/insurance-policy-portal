@@ -4,7 +4,9 @@
   gap: var(--spacing-1);
 }
 
-.select-full { width: 100%; }
+.select-full {
+  width: 100%;
+}
 
 .select-label {
   font-size: var(--font-size-sm);
@@ -12,7 +14,10 @@
   color: var(--color-gray-700);
 }
 
-.select-required { color: var(--color-danger); margin-left: 2px; }
+.select-required {
+  color: var(--color-danger);
+  margin-left: 2px;
+}
 
 .select-field {
   padding: 0.5rem 0.75rem;
@@ -37,5 +42,10 @@
   box-shadow: 0 0 0 3px var(--color-primary-100);
 }
 
-.select-field.select-error { border-color: var(--color-danger); }
-.select-error-text { font-size: var(--font-size-xs); color: var(--color-danger); }
+.select-field.select-error {
+  border-color: var(--color-danger);
+}
+.select-error-text {
+  font-size: var(--font-size-xs);
+  color: var(--color-danger);
+}

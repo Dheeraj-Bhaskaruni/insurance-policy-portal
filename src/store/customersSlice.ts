@@ -55,7 +55,10 @@ const customersSlice = createSlice({
   },
   extraReducers: (builder) => {
     builder
-      .addCase(fetchCustomers.pending, (state) => { state.loading = true; state.error = null; })
+      .addCase(fetchCustomers.pending, (state) => {
+        state.loading = true;
+        state.error = null;
+      })
       .addCase(fetchCustomers.fulfilled, (state, action) => {
         state.loading = false;
         state.items = action.payload.data;
@@ -63,10 +66,21 @@ const customersSlice = createSlice({
         state.page = action.payload.page;
         state.totalPages = action.payload.totalPages;
       })
-      .addCase(fetchCustomers.rejected, (state, action) => { state.loading = false; state.error = action.payload as string; })
-      .addCase(fetchCustomerById.pending, (state) => { state.loading = true; })
-      .addCase(fetchCustomerById.fulfilled, (state, action) => { state.loading = false; state.selectedCustomer = action.payload; })
-      .addCase(fetchCustomerById.rejected, (state, action) => { state.loading = false; state.error = action.payload as string; });
+      .addCase(fetchCustomers.rejected, (state, action) => {
+        state.loading = false;
+        state.error = action.payload as string;
+      })
+      .addCase(fetchCustomerById.pending, (state) => {
+        state.loading = true;
+      })
+      .addCase(fetchCustomerById.fulfilled, (state, action) => {
+        state.loading = false;
+        state.selectedCustomer = action.payload;
+      })
+      .addCase(fetchCustomerById.rejected, (state, action) => {
+        state.loading = false;
+        state.error = action.payload as string;
+      });
   },
 });
 

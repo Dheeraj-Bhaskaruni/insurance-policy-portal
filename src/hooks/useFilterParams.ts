@@ -30,19 +30,22 @@ export function useFilterParams(defaults?: Partial<FilterParams>) {
 
   const setFilters = useCallback(
     (updates: Partial<FilterParams>) => {
-      setSearchParams((prev) => {
-        const next = new URLSearchParams(prev);
+      setSearchParams(
+        (prev) => {
+          const next = new URLSearchParams(prev);
 
-        for (const [key, value] of Object.entries(updates)) {
-          if (value === undefined || value === '' || value === null) {
-            next.delete(key);
-          } else {
-            next.set(key, String(value));
+          for (const [key, value] of Object.entries(updates)) {
+            if (value === undefined || value === '' || value === null) {
+              next.delete(key);
+            } else {
+              next.set(key, String(value));
+            }
           }
-        }
 
-        return next;
-      }, { replace: true });
+          return next;
+        },
+        { replace: true },
+      );
     },
     [setSearchParams],
   );

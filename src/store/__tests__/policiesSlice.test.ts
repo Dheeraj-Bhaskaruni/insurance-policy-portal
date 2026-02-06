@@ -1,7 +1,12 @@
 import { describe, it, expect } from 'vitest';
 
 import { Policy } from '../../types';
-import policiesReducer, { setFilters, clearSelectedPolicy, fetchPolicies, cancelPolicy } from '../policiesSlice';
+import policiesReducer, {
+  setFilters,
+  clearSelectedPolicy,
+  fetchPolicies,
+  cancelPolicy,
+} from '../policiesSlice';
 
 const mockPolicy: Policy = {
   id: 'POL-001',
@@ -87,7 +92,11 @@ describe('policiesSlice', () => {
     });
 
     it('updates selectedPolicy if it matches cancelled id', () => {
-      const stateWithSelected = { ...initialState, items: [mockPolicy], selectedPolicy: mockPolicy };
+      const stateWithSelected = {
+        ...initialState,
+        items: [mockPolicy],
+        selectedPolicy: mockPolicy,
+      };
       const cancelledPolicy = { ...mockPolicy, status: 'cancelled' as const };
       const state = policiesReducer(
         stateWithSelected,

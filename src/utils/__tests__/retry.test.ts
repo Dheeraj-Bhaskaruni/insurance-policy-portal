@@ -11,7 +11,8 @@ describe('withRetry', () => {
   });
 
   it('retries on failure and succeeds eventually', async () => {
-    const fn = vi.fn()
+    const fn = vi
+      .fn()
       .mockRejectedValueOnce(new TypeError('Network error'))
       .mockRejectedValueOnce(new TypeError('Network error'))
       .mockResolvedValue('recovered');
@@ -24,9 +25,9 @@ describe('withRetry', () => {
   it('throws after exhausting retries', async () => {
     const fn = vi.fn().mockRejectedValue(new TypeError('persistent failure'));
 
-    await expect(
-      withRetry(fn, { maxRetries: 2, baseDelay: 10 }),
-    ).rejects.toThrow('persistent failure');
+    await expect(withRetry(fn, { maxRetries: 2, baseDelay: 10 })).rejects.toThrow(
+      'persistent failure',
+    );
     expect(fn).toHaveBeenCalledTimes(3);
   });
 
@@ -47,9 +48,7 @@ describe('withRetry', () => {
     const error429 = Object.assign(new Error('Too Many Requests'), {
       response: { status: 429 },
     });
-    const fn = vi.fn()
-      .mockRejectedValueOnce(error429)
-      .mockResolvedValue('ok');
+    const fn = vi.fn().mockRejectedValueOnce(error429).mockResolvedValue('ok');
 
     const result = await withRetry(fn, {
       maxRetries: 2,

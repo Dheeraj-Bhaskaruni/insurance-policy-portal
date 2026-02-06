@@ -1,4 +1,12 @@
-import { isValidEmail, isValidPhone, isValidZipCode, isPositiveNumber, required, minLength, maxLength } from '../validators';
+import {
+  isValidEmail,
+  isValidPhone,
+  isValidZipCode,
+  isPositiveNumber,
+  required,
+  minLength,
+  maxLength,
+} from '../validators';
 
 describe('isValidEmail', () => {
   it('accepts valid emails', () => {

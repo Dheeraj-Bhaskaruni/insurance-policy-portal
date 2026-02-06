@@ -13,7 +13,10 @@ import { formatCurrency, formatDate } from '../../utils/formatters';
 
 import './ClaimsPage.css';
 
-const statusBadgeVariant: Record<ClaimStatus, 'success' | 'warning' | 'danger' | 'default' | 'info'> = {
+const statusBadgeVariant: Record<
+  ClaimStatus,
+  'success' | 'warning' | 'danger' | 'default' | 'info'
+> = {
   submitted: 'default',
   under_review: 'warning',
   approved: 'success',
@@ -26,7 +29,9 @@ const ClaimsPage: React.FC = () => {
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
   const user = useAppSelector(selectCurrentUser);
-  const { items, total, page, totalPages, loading, filters } = useAppSelector((state) => state.claims);
+  const { items, total, page, totalPages, loading, filters } = useAppSelector(
+    (state) => state.claims,
+  );
   const [sortBy, setSortBy] = useState<string>('');
   const [sortOrder, setSortOrder] = useState<'asc' | 'desc'>('desc');
 
@@ -52,18 +57,27 @@ const ClaimsPage: React.FC = () => {
     { key: 'customerName', label: 'Customer', sortable: true },
     { key: 'policyNumber', label: 'Policy #', sortable: true },
     {
-      key: 'type', label: 'Type', render: (c: Claim) => POLICY_TYPE_LABELS[c.type] || c.type,
+      key: 'type',
+      label: 'Type',
+      render: (c: Claim) => POLICY_TYPE_LABELS[c.type] || c.type,
     },
     {
-      key: 'status', label: 'Status',
-      render: (c: Claim) => <Badge variant={statusBadgeVariant[c.status]}>{CLAIM_STATUS_LABELS[c.status]}</Badge>,
+      key: 'status',
+      label: 'Status',
+      render: (c: Claim) => (
+        <Badge variant={statusBadgeVariant[c.status]}>{CLAIM_STATUS_LABELS[c.status]}</Badge>
+      ),
     },
     {
-      key: 'amount', label: 'Amount', sortable: true,
+      key: 'amount',
+      label: 'Amount',
+      sortable: true,
       render: (c: Claim) => formatCurrency(c.amount),
     },
     {
-      key: 'filedDate', label: 'Filed', sortable: true,
+      key: 'filedDate',
+      label: 'Filed',
+      sortable: true,
       render: (c: Claim) => formatDate(c.filedDate),
     },
   ];
@@ -86,7 +100,9 @@ const ClaimsPage: React.FC = () => {
           <Select
             options={Object.entries(CLAIM_STATUS_LABELS).map(([v, l]) => ({ value: v, label: l }))}
             placeholder="All Statuses"
-            onChange={(e) => dispatch(setClaimFilters({ status: e.target.value || undefined, page: 1 }))}
+            onChange={(e) =>
+              dispatch(setClaimFilters({ status: e.target.value || undefined, page: 1 }))
+            }
             fullWidth={false}
           />
         </div>
@@ -98,13 +114,22 @@ const ClaimsPage: React.FC = () => {
           onRowClick={(c) => navigate(`/claims/${c.id}`)}
           sortBy={sortBy}
           sortOrder={sortOrder}
-          onSort={(key) => { setSortOrder(sortBy === key && sortOrder === 'asc' ? 'desc' : 'asc'); setSortBy(key); }}
+          onSort={(key) => {
+            setSortOrder(sortBy === key && sortOrder === 'asc' ? 'desc' : 'asc');
+            setSortBy(key);
+          }}
           loading={loading}
           emptyMessage="No claims found"
         />
 
         <div className="claims-pagination">
-          <Pagination currentPage={page} totalPages={totalPages} onPageChange={(p) => dispatch(setClaimFilters({ page: p }))} totalItems={total} pageSize={filters.pageSize} />
+          <Pagination
+            currentPage={page}
+            totalPages={totalPages}
+            onPageChange={(p) => dispatch(setClaimFilters({ page: p }))}
+            totalItems={total}
+            pageSize={filters.pageSize}
+          />
         </div>
       </Card>
     </div>

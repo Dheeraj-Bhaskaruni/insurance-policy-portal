@@ -15,8 +15,15 @@ import { formatCurrency, formatDate, formatDateTime } from '../../utils/formatte
 
 import './ClaimDetailPage.css';
 
-const statusBadgeVariant: Record<ClaimStatus, 'success' | 'warning' | 'danger' | 'default' | 'info'> = {
-  submitted: 'default', under_review: 'warning', approved: 'success', rejected: 'danger', settled: 'info',
+const statusBadgeVariant: Record<
+  ClaimStatus,
+  'success' | 'warning' | 'danger' | 'default' | 'info'
+> = {
+  submitted: 'default',
+  under_review: 'warning',
+  approved: 'success',
+  rejected: 'danger',
+  settled: 'info',
 };
 
 const ClaimDetailPage: React.FC = () => {
@@ -33,7 +40,9 @@ const ClaimDetailPage: React.FC = () => {
 
   useEffect(() => {
     if (id) dispatch(fetchClaimById(id));
-    return () => { dispatch(clearSelectedClaim()); };
+    return () => {
+      dispatch(clearSelectedClaim());
+    };
   }, [id, dispatch]);
 
   const handleStatusUpdate = async () => {
@@ -43,7 +52,10 @@ const ClaimDetailPage: React.FC = () => {
     setUpdating(false);
     setShowStatusModal(false);
     if (updateClaimStatus.fulfilled.match(result)) {
-      notify('success', `Claim ${claim.claimNumber} status updated to ${CLAIM_STATUS_LABELS[newStatus]}.`);
+      notify(
+        'success',
+        `Claim ${claim.claimNumber} status updated to ${CLAIM_STATUS_LABELS[newStatus]}.`,
+      );
     } else {
       notify('error', 'Failed to update claim status. Please try again.');
     }
@@ -70,11 +82,14 @@ const ClaimDetailPage: React.FC = () => {
           <div>
             <h2 className="claim-detail-number">{claim.claimNumber}</h2>
             <p className="claim-detail-meta">
-              {POLICY_TYPE_LABELS[claim.type]} &middot; Policy {claim.policyNumber} &middot; {claim.customerName}
+              {POLICY_TYPE_LABELS[claim.type]} &middot; Policy {claim.policyNumber} &middot;{' '}
+              {claim.customerName}
             </p>
           </div>
           <div className="claim-detail-actions">
-            <Badge variant={statusBadgeVariant[claim.status]}>{CLAIM_STATUS_LABELS[claim.status]}</Badge>
+            <Badge variant={statusBadgeVariant[claim.status]}>
+              {CLAIM_STATUS_LABELS[claim.status]}
+            </Badge>
             {canUpdateStatus && !['settled', 'rejected'].includes(claim.status) && (
               <Button variant="outline" size="sm" onClick={() => setShowStatusModal(true)}>
                 Update Status
@@ -84,10 +99,22 @@ const ClaimDetailPage: React.FC = () => {
         </div>
 
         <div className="claim-info-grid">
-          <div className="claim-info-item"><span>Claim Amount</span><strong>{formatCurrency(claim.amount)}</strong></div>
-          <div className="claim-info-item"><span>Incident Date</span><strong>{formatDate(claim.incidentDate)}</strong></div>
-          <div className="claim-info-item"><span>Filed Date</span><strong>{formatDate(claim.filedDate)}</strong></div>
-          <div className="claim-info-item"><span>Resolved Date</span><strong>{claim.resolvedDate ? formatDate(claim.resolvedDate) : 'Pending'}</strong></div>
+          <div className="claim-info-item">
+            <span>Claim Amount</span>
+            <strong>{formatCurrency(claim.amount)}</strong>
+          </div>
+          <div className="claim-info-item">
+            <span>Incident Date</span>
+            <strong>{formatDate(claim.incidentDate)}</strong>
+          </div>
+          <div className="claim-info-item">
+            <span>Filed Date</span>
+            <strong>{formatDate(claim.filedDate)}</strong>
+          </div>
+          <div className="claim-info-item">
+            <span>Resolved Date</span>
+            <strong>{claim.resolvedDate ? formatDate(claim.resolvedDate) : 'Pending'}</strong>
+          </div>
         </div>
 
         <div className="claim-section">
@@ -127,13 +154,26 @@ const ClaimDetailPage: React.FC = () => {
         )}
       </Card>
 
-      <Modal isOpen={showStatusModal} onClose={() => setShowStatusModal(false)} title="Update Claim Status" size="sm"
-        footer={<>
-          <Button variant="secondary" onClick={() => setShowStatusModal(false)}>Cancel</Button>
-          <Button variant="primary" onClick={handleStatusUpdate} loading={updating}>Update</Button>
-        </>}
+      <Modal
+        isOpen={showStatusModal}
+        onClose={() => setShowStatusModal(false)}
+        title="Update Claim Status"
+        size="sm"
+        footer={
+          <>
+            <Button variant="secondary" onClick={() => setShowStatusModal(false)}>
+              Cancel
+            </Button>
+            <Button variant="primary" onClick={handleStatusUpdate} loading={updating}>
+              Update
+            </Button>
+          </>
+        }
       >
-        <Select label="New Status" value={newStatus} onChange={(e) => setNewStatus(e.target.value as ClaimStatus)}
+        <Select
+          label="New Status"
+          value={newStatus}
+          onChange={(e) => setNewStatus(e.target.value as ClaimStatus)}
           options={Object.entries(CLAIM_STATUS_LABELS).map(([v, l]) => ({ value: v, label: l }))}
         />
       </Modal>

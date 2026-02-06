@@ -1,4 +1,11 @@
-import { formatCurrency, formatDate, formatPhoneNumber, truncateText, capitalizeFirst, formatPercentage } from '../formatters';
+import {
+  formatCurrency,
+  formatDate,
+  formatPhoneNumber,
+  truncateText,
+  capitalizeFirst,
+  formatPercentage,
+} from '../formatters';
 
 describe('formatCurrency', () => {
   it('formats positive amounts', () => {

@@ -1,6 +1,28 @@
-.claims-card { overflow: hidden; }
-.claims-toolbar { display: flex; justify-content: space-between; align-items: center; padding: var(--spacing-4) var(--spacing-5); border-bottom: 1px solid var(--color-gray-200); flex-wrap: wrap; gap: var(--spacing-3); }
-.claims-toolbar .select-group { min-width: 160px; }
-.claim-number { font-weight: var(--font-weight-semibold); color: var(--color-primary); }
-.claims-pagination { padding: 0 var(--spacing-5); }
-@media (max-width: 768px) { .claims-toolbar { flex-direction: column; align-items: stretch; } }
+.claims-card {
+  overflow: hidden;
+}
+.claims-toolbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: var(--spacing-4) var(--spacing-5);
+  border-bottom: 1px solid var(--color-gray-200);
+  flex-wrap: wrap;
+  gap: var(--spacing-3);
+}
+.claims-toolbar .select-group {
+  min-width: 160px;
+}
+.claim-number {
+  font-weight: var(--font-weight-semibold);
+  color: var(--color-primary);
+}
+.claims-pagination {
+  padding: 0 var(--spacing-5);
+}
+@media (max-width: 768px) {
+  .claims-toolbar {
+    flex-direction: column;
+    align-items: stretch;
+  }
+}

@@ -39,7 +39,11 @@ const CreateClaimPage: React.FC = () => {
     [policies],
   );
 
-  const { control, handleSubmit, formState: { errors } } = useForm({
+  const {
+    control,
+    handleSubmit,
+    formState: { errors },
+  } = useForm({
     defaultValues: {
       policyId: '',
       amount: '',
@@ -48,15 +52,22 @@ const CreateClaimPage: React.FC = () => {
     },
   });
 
-  const onSubmit = async (data: { policyId: string; amount: string; description: string; incidentDate: string }) => {
+  const onSubmit = async (data: {
+    policyId: string;
+    amount: string;
+    description: string;
+    incidentDate: string;
+  }) => {
     setSubmitting(true);
     setSubmitError(null);
-    const result = await dispatch(createClaim({
-      policyId: data.policyId,
-      amount: parseFloat(data.amount),
-      description: data.description,
-      incidentDate: new Date(data.incidentDate).toISOString(),
-    }));
+    const result = await dispatch(
+      createClaim({
+        policyId: data.policyId,
+        amount: parseFloat(data.amount),
+        description: data.description,
+        incidentDate: new Date(data.incidentDate).toISOString(),
+      }),
+    );
     setSubmitting(false);
     if (createClaim.fulfilled.match(result)) {
       navigate('/claims');
@@ -72,37 +83,93 @@ const CreateClaimPage: React.FC = () => {
           <h1 className="page-title">File a New Claim</h1>
           <p className="page-subtitle">Submit a claim against an existing policy</p>
         </div>
-        <Button variant="ghost" onClick={() => navigate('/claims')}>Cancel</Button>
+        <Button variant="ghost" onClick={() => navigate('/claims')}>
+          Cancel
+        </Button>
       </div>
 
       <Card className="create-claim-card">
         <form onSubmit={handleSubmit(onSubmit)} className="claim-form">
           {submitError && (
-            <div className="form-error" role="alert">{submitError}</div>
+            <div className="form-error" role="alert">
+              {submitError}
+            </div>
           )}
 
-          <Controller name="policyId" control={control} rules={{ required: 'Policy is required' }}
+          <Controller
+            name="policyId"
+            control={control}
+            rules={{ required: 'Policy is required' }}
             render={({ field }) => (
-              <Select label="Policy" required error={errors.policyId?.message}
-                options={policyOptions} {...field} />
+              <Select
+                label="Policy"
+                required
+                error={errors.policyId?.message}
+                options={policyOptions}
+                {...field}
+              />
             )}
           />
 
-          <Controller name="amount" control={control} rules={{ required: 'Amount is required', min: { value: 1, message: 'Must be positive' } }}
-            render={({ field }) => <Input label="Claim Amount ($)" type="number" required error={errors.amount?.message} placeholder="e.g. 5000" {...field} />}
+          <Controller
+            name="amount"
+            control={control}
+            rules={{
+              required: 'Amount is required',
+              min: { value: 1, message: 'Must be positive' },
+            }}
+            render={({ field }) => (
+              <Input
+                label="Claim Amount ($)"
+                type="number"
+                required
+                error={errors.amount?.message}
+                placeholder="e.g. 5000"
+                {...field}
+              />
+            )}
           />
 
-          <Controller name="incidentDate" control={control} rules={{ required: 'Incident date is required' }}
-            render={({ field }) => <Input label="Incident Date" type="date" required error={errors.incidentDate?.message} {...field} />}
+          <Controller
+            name="incidentDate"
+            control={control}
+            rules={{ required: 'Incident date is required' }}
+            render={({ field }) => (
+              <Input
+                label="Incident Date"
+                type="date"
+                required
+                error={errors.incidentDate?.message}
+                {...field}
+              />
+            )}
           />
 
-          <Controller name="description" control={control} rules={{ required: 'Description is required', minLength: { value: 10, message: 'Please provide more detail' } }}
-            render={({ field }) => <Input label="Description" required error={errors.description?.message} placeholder="Describe the incident in detail" {...field} />}
+          <Controller
+            name="description"
+            control={control}
+            rules={{
+              required: 'Description is required',
+              minLength: { value: 10, message: 'Please provide more detail' },
+            }}
+            render={({ field }) => (
+              <Input
+                label="Description"
+                required
+                error={errors.description?.message}
+                placeholder="Describe the incident in detail"
+                {...field}
+              />
+            )}
           />
 
           <div className="form-actions">
-            <Button variant="secondary" type="button" onClick={() => navigate('/claims')}>Cancel</Button>
-            <Button variant="primary" type="submit" loading={submitting}>Submit Claim</Button>
+            <Button variant="secondary" type="button" onClick={() => navigate('/claims')}>
+              Cancel
+            </Button>
+            <Button variant="primary" type="submit" loading={submitting}>
+              Submit Claim
+            </Button>
           </div>
         </form>
       </Card>

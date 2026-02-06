@@ -18,7 +18,9 @@
   transition: color var(--transition-fast);
 }
 
-.tab-btn:hover { color: var(--color-gray-700); }
+.tab-btn:hover {
+  color: var(--color-gray-700);
+}
 
 .tab-btn.active {
   color: var(--color-primary);

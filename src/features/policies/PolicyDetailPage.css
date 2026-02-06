@@ -76,7 +76,9 @@
   border-bottom: 1px solid var(--color-gray-100);
 }
 
-.detail-row:last-child { border-bottom: none; }
+.detail-row:last-child {
+  border-bottom: none;
+}
 
 .detail-label {
   font-size: var(--font-size-sm);
@@ -91,5 +93,7 @@
 }
 
 @media (max-width: 768px) {
-  .policy-detail-summary { grid-template-columns: repeat(2, 1fr); }
+  .policy-detail-summary {
+    grid-template-columns: repeat(2, 1fr);
+  }
 }

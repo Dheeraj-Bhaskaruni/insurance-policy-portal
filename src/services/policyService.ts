@@ -15,9 +15,7 @@ export const policyService = {
     if (params.search) {
       const q = params.search.toLowerCase();
       filtered = filtered.filter(
-        (p) =>
-          p.policyNumber.toLowerCase().includes(q) ||
-          p.customerName.toLowerCase().includes(q),
+        (p) => p.policyNumber.toLowerCase().includes(q) || p.customerName.toLowerCase().includes(q),
       );
     }
     if (params.status) {
@@ -82,7 +80,11 @@ export const policyService = {
     await delay(600);
     const idx = mockPolicies.findIndex((p) => p.id === id);
     if (idx === -1) throw new Error('Policy not found');
-    mockPolicies[idx] = { ...mockPolicies[idx], status: 'cancelled', updatedAt: new Date().toISOString() };
+    mockPolicies[idx] = {
+      ...mockPolicies[idx],
+      status: 'cancelled',
+      updatedAt: new Date().toISOString(),
+    };
     return mockPolicies[idx];
   },
 

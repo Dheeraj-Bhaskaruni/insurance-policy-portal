@@ -35,7 +35,9 @@ const SearchBar: React.FC<SearchBarProps> = ({
 
   return (
     <div className="search-bar">
-      <span className="search-icon" aria-hidden="true">&#128269;</span>
+      <span className="search-icon" aria-hidden="true">
+        &#128269;
+      </span>
       <input
         type="search"
         className="search-input"

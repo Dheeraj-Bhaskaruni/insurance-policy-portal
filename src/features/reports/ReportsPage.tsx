@@ -1,5 +1,14 @@
 import React, { useEffect, useMemo } from 'react';
-import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, Legend } from 'recharts';
+import {
+  BarChart,
+  Bar,
+  XAxis,
+  YAxis,
+  CartesianGrid,
+  Tooltip,
+  ResponsiveContainer,
+  Legend,
+} from 'recharts';
 
 import { Card, Button } from '../../components/ui';
 import { usePageTitle } from '../../hooks/usePageTitle';
@@ -50,9 +59,13 @@ const ReportsPage: React.FC = () => {
     });
   }, [policies, claims]);
 
-  const totalPremium = policies.filter((p) => p.status === 'active').reduce((s, p) => s + p.premiumAmount, 0);
+  const totalPremium = policies
+    .filter((p) => p.status === 'active')
+    .reduce((s, p) => s + p.premiumAmount, 0);
   const totalClaimAmount = claims.reduce((s, c) => s + c.amount, 0);
-  const settledAmount = claims.filter((c) => c.status === 'settled').reduce((s, c) => s + c.amount, 0);
+  const settledAmount = claims
+    .filter((c) => c.status === 'settled')
+    .reduce((s, c) => s + c.amount, 0);
 
   return (
     <div className="reports-page">
@@ -69,17 +82,37 @@ const ReportsPage: React.FC = () => {
                 (p) => POLICY_TYPE_LABELS[p.type] === row.name && p.status === 'active',
               );
               const totalTypePremium = typePolicies.reduce((s, p) => s + p.premiumAmount, 0);
-              const avgPremium = typePolicies.length > 0 ? totalTypePremium / typePolicies.length : 0;
-              return { name: row.name, policies: row.policies, totalPremium: totalTypePremium, avgPremium, claims: row.claims, ratio: row.ratio };
+              const avgPremium =
+                typePolicies.length > 0 ? totalTypePremium / typePolicies.length : 0;
+              return {
+                name: row.name,
+                policies: row.policies,
+                totalPremium: totalTypePremium,
+                avgPremium,
+                claims: row.claims,
+                ratio: row.ratio,
+              };
             });
-            exportToCsv(exportData, [
-              { key: 'name', header: 'Policy Type' },
-              { key: 'policies', header: 'Active Policies' },
-              { key: 'totalPremium', header: 'Total Premium', formatter: (v) => formatCurrency(v as number) },
-              { key: 'avgPremium', header: 'Avg Premium', formatter: (v) => formatCurrency(v as number) },
-              { key: 'claims', header: 'Claims Filed' },
-              { key: 'ratio', header: 'Claims Ratio (%)' },
-            ], `insurance-report-${new Date().toISOString().split('T')[0]}`);
+            exportToCsv(
+              exportData,
+              [
+                { key: 'name', header: 'Policy Type' },
+                { key: 'policies', header: 'Active Policies' },
+                {
+                  key: 'totalPremium',
+                  header: 'Total Premium',
+                  formatter: (v) => formatCurrency(v as number),
+                },
+                {
+                  key: 'avgPremium',
+                  header: 'Avg Premium',
+                  formatter: (v) => formatCurrency(v as number),
+                },
+                { key: 'claims', header: 'Claims Filed' },
+                { key: 'ratio', header: 'Claims Ratio (%)' },
+              ],
+              `insurance-report-${new Date().toISOString().split('T')[0]}`,
+            );
           }}
         >
           Export CSV
@@ -101,7 +134,9 @@ const ReportsPage: React.FC = () => {
         </Card>
         <Card className="report-summary-card">
           <span className="report-summary-label">Loss Ratio</span>
-          <span className="report-summary-value">{totalPremium > 0 ? ((totalClaimAmount / totalPremium) * 100).toFixed(1) : 0}%</span>
+          <span className="report-summary-value">
+            {totalPremium > 0 ? ((totalClaimAmount / totalPremium) * 100).toFixed(1) : 0}%
+          </span>
         </Card>
       </div>
 
@@ -154,12 +189,17 @@ const ReportsPage: React.FC = () => {
           </thead>
           <tbody>
             {claimsRatioData.map((row) => {
-              const typePolicies = policies.filter((p) => POLICY_TYPE_LABELS[p.type] === row.name && p.status === 'active');
+              const typePolicies = policies.filter(
+                (p) => POLICY_TYPE_LABELS[p.type] === row.name && p.status === 'active',
+              );
               const totalTypePremium = typePolicies.reduce((s, p) => s + p.premiumAmount, 0);
-              const avgPremium = typePolicies.length > 0 ? totalTypePremium / typePolicies.length : 0;
+              const avgPremium =
+                typePolicies.length > 0 ? totalTypePremium / typePolicies.length : 0;
               return (
                 <tr key={row.name}>
-                  <td><strong>{row.name}</strong></td>
+                  <td>
+                    <strong>{row.name}</strong>
+                  </td>
                   <td>{row.policies}</td>
                   <td>{formatCurrency(totalTypePremium)}</td>
                   <td>{formatCurrency(avgPremium)}</td>

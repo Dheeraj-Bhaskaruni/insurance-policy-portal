@@ -51,6 +51,11 @@
 }
 
 @media (max-width: 640px) {
-  .pagination { justify-content: center; }
-  .pagination-info { width: 100%; text-align: center; }
+  .pagination {
+    justify-content: center;
+  }
+  .pagination-info {
+    width: 100%;
+    text-align: center;
+  }
 }

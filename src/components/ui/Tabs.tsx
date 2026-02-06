@@ -34,12 +34,7 @@ const Tabs: React.FC<TabsProps> = ({ tabs, defaultTab }) => {
       </div>
       <div className="tabs-content">
         {tabs.map((tab) => (
-          <div
-            key={tab.id}
-            id={`tabpanel-${tab.id}`}
-            role="tabpanel"
-            hidden={activeTab !== tab.id}
-          >
+          <div key={tab.id} id={`tabpanel-${tab.id}`} role="tabpanel" hidden={activeTab !== tab.id}>
             {activeTab === tab.id && tab.content}
           </div>
         ))}

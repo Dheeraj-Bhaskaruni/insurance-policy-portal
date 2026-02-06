@@ -22,12 +22,22 @@
   font-size: var(--font-size-sm);
 }
 
-.toast-success { background-color: var(--color-success); }
-.toast-error { background-color: var(--color-danger); }
-.toast-info { background-color: var(--color-info); }
-.toast-warning { background-color: var(--color-warning); }
+.toast-success {
+  background-color: var(--color-success);
+}
+.toast-error {
+  background-color: var(--color-danger);
+}
+.toast-info {
+  background-color: var(--color-info);
+}
+.toast-warning {
+  background-color: var(--color-warning);
+}
 
-.toast-message { flex: 1; }
+.toast-message {
+  flex: 1;
+}
 
 .toast-dismiss {
   background: none;
@@ -39,11 +49,19 @@
   line-height: 1;
 }
 
-.toast-dismiss:hover { color: white; }
+.toast-dismiss:hover {
+  color: white;
+}
 
 @keyframes slideIn {
-  from { transform: translateX(100%); opacity: 0; }
-  to { transform: translateX(0); opacity: 1; }
+  from {
+    transform: translateX(100%);
+    opacity: 0;
+  }
+  to {
+    transform: translateX(0);
+    opacity: 1;
+  }
 }
 
 @media (max-width: 480px) {

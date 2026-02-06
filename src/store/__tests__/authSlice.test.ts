@@ -41,7 +41,14 @@ describe('authSlice', () => {
   it('handles logoutUser.fulfilled', () => {
     const loggedInState = {
       ...initialState,
-      user: { id: '1', email: 'test@test.com', firstName: 'Test', lastName: 'User', role: 'admin' as const, createdAt: '' },
+      user: {
+        id: '1',
+        email: 'test@test.com',
+        firstName: 'Test',
+        lastName: 'User',
+        role: 'admin' as const,
+        createdAt: '',
+      },
       token: 'abc',
       isAuthenticated: true,
     };
@@ -65,7 +72,14 @@ describe('authSlice', () => {
   });
 
   it('sets user and token on login.fulfilled', () => {
-    const user = { id: '1', email: 'admin@test.com', firstName: 'Admin', lastName: 'User', role: 'admin' as const, createdAt: '' };
+    const user = {
+      id: '1',
+      email: 'admin@test.com',
+      firstName: 'Admin',
+      lastName: 'User',
+      role: 'admin' as const,
+      createdAt: '',
+    };
     const state = authReducer(
       initialState,
       login.fulfilled({ user, token: 'jwt-token' }, '', { email: '', password: '' }),

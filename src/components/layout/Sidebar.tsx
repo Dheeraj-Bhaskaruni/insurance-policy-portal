@@ -36,7 +36,11 @@ const Sidebar: React.FC<SidebarProps> = ({ isOpen, onClose }) => {
 
         <nav className="sidebar-nav">
           {navItems.map((item) => {
-            if ((item.path === ROUTES.REPORTS || item.path === ROUTES.CUSTOMERS) && user?.role === 'customer') return null;
+            if (
+              (item.path === ROUTES.REPORTS || item.path === ROUTES.CUSTOMERS) &&
+              user?.role === 'customer'
+            )
+              return null;
             return (
               <NavLink
                 key={item.path}
@@ -57,10 +61,13 @@ const Sidebar: React.FC<SidebarProps> = ({ isOpen, onClose }) => {
         <div className="sidebar-footer">
           <div className="sidebar-user">
             <div className="sidebar-avatar">
-              {user?.firstName?.[0]}{user?.lastName?.[0]}
+              {user?.firstName?.[0]}
+              {user?.lastName?.[0]}
             </div>
             <div className="sidebar-user-info">
-              <span className="sidebar-user-name">{user?.firstName} {user?.lastName}</span>
+              <span className="sidebar-user-name">
+                {user?.firstName} {user?.lastName}
+              </span>
               <span className="sidebar-user-role">{user?.role}</span>
             </div>
           </div>

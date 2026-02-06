@@ -82,7 +82,10 @@ const claimsSlice = createSlice({
   },
   extraReducers: (builder) => {
     builder
-      .addCase(fetchClaims.pending, (state) => { state.loading = true; state.error = null; })
+      .addCase(fetchClaims.pending, (state) => {
+        state.loading = true;
+        state.error = null;
+      })
       .addCase(fetchClaims.fulfilled, (state, action) => {
         state.loading = false;
         state.items = action.payload.data;
@@ -90,11 +93,25 @@ const claimsSlice = createSlice({
         state.page = action.payload.page;
         state.totalPages = action.payload.totalPages;
       })
-      .addCase(fetchClaims.rejected, (state, action) => { state.loading = false; state.error = action.payload as string; })
-      .addCase(fetchClaimById.pending, (state) => { state.loading = true; })
-      .addCase(fetchClaimById.fulfilled, (state, action) => { state.loading = false; state.selectedClaim = action.payload; })
-      .addCase(fetchClaimById.rejected, (state, action) => { state.loading = false; state.error = action.payload as string; })
-      .addCase(createClaim.fulfilled, (state, action) => { state.items.unshift(action.payload); state.total += 1; })
+      .addCase(fetchClaims.rejected, (state, action) => {
+        state.loading = false;
+        state.error = action.payload as string;
+      })
+      .addCase(fetchClaimById.pending, (state) => {
+        state.loading = true;
+      })
+      .addCase(fetchClaimById.fulfilled, (state, action) => {
+        state.loading = false;
+        state.selectedClaim = action.payload;
+      })
+      .addCase(fetchClaimById.rejected, (state, action) => {
+        state.loading = false;
+        state.error = action.payload as string;
+      })
+      .addCase(createClaim.fulfilled, (state, action) => {
+        state.items.unshift(action.payload);
+        state.total += 1;
+      })
       .addCase(updateClaimStatus.fulfilled, (state, action) => {
         const idx = state.items.findIndex((c) => c.id === action.payload.id);
         if (idx !== -1) state.items[idx] = action.payload;

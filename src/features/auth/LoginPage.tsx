@@ -23,7 +23,9 @@ const LoginPage: React.FC = () => {
   }, [isAuthenticated, navigate]);
 
   useEffect(() => {
-    return () => { dispatch(clearError()); };
+    return () => {
+      dispatch(clearError());
+    };
   }, [dispatch]);
 
   const handleSubmit = (e: React.FormEvent) => {
@@ -75,15 +77,33 @@ const LoginPage: React.FC = () => {
         <div className="login-demo">
           <p className="login-demo-title">Demo Accounts</p>
           <div className="login-demo-accounts">
-            <button className="demo-account" onClick={() => { setEmail('admin@insurecorp.com'); setPassword('admin123'); }}>
+            <button
+              className="demo-account"
+              onClick={() => {
+                setEmail('admin@insurecorp.com');
+                setPassword('admin123');
+              }}
+            >
               <strong>Admin</strong>
               <span>admin@insurecorp.com</span>
             </button>
-            <button className="demo-account" onClick={() => { setEmail('agent@insurecorp.com'); setPassword('agent123'); }}>
+            <button
+              className="demo-account"
+              onClick={() => {
+                setEmail('agent@insurecorp.com');
+                setPassword('agent123');
+              }}
+            >
               <strong>Agent</strong>
               <span>agent@insurecorp.com</span>
             </button>
-            <button className="demo-account" onClick={() => { setEmail('customer@example.com'); setPassword('customer123'); }}>
+            <button
+              className="demo-account"
+              onClick={() => {
+                setEmail('customer@example.com');
+                setPassword('customer123');
+              }}
+            >
               <strong>Customer</strong>
               <span>customer@example.com</span>
             </button>

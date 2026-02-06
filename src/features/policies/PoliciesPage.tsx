@@ -25,7 +25,9 @@ const PoliciesPage: React.FC = () => {
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
   const user = useAppSelector(selectCurrentUser);
-  const { items, total, page, totalPages, loading, filters } = useAppSelector((state) => state.policies);
+  const { items, total, page, totalPages, loading, filters } = useAppSelector(
+    (state) => state.policies,
+  );
   const [sortBy, setSortBy] = useState<string>('');
   const [sortOrder, setSortOrder] = useState<'asc' | 'desc'>('asc');
 
@@ -127,7 +129,10 @@ const PoliciesPage: React.FC = () => {
           <SearchBar onSearch={handleSearch} placeholder="Search policies..." />
           <div className="policies-filters">
             <Select
-              options={Object.entries(POLICY_STATUS_LABELS).map(([v, l]) => ({ value: v, label: l }))}
+              options={Object.entries(POLICY_STATUS_LABELS).map(([v, l]) => ({
+                value: v,
+                label: l,
+              }))}
               placeholder="All Statuses"
               onChange={handleStatusFilter}
               fullWidth={false}

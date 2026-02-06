@@ -28,10 +28,14 @@ export const required = (value: string): string | undefined => {
   return value && value.trim().length > 0 ? undefined : 'This field is required';
 };
 
-export const minLength = (min: number) => (value: string): string | undefined => {
-  return value && value.length >= min ? undefined : `Must be at least ${min} characters`;
-};
+export const minLength =
+  (min: number) =>
+  (value: string): string | undefined => {
+    return value && value.length >= min ? undefined : `Must be at least ${min} characters`;
+  };
 
-export const maxLength = (max: number) => (value: string): string | undefined => {
-  return value && value.length <= max ? undefined : `Must be no more than ${max} characters`;
-};
+export const maxLength =
+  (max: number) =>
+  (value: string): string | undefined => {
+    return value && value.length <= max ? undefined : `Must be no more than ${max} characters`;
+  };

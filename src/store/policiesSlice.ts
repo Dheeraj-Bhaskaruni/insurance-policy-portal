@@ -93,7 +93,10 @@ const policiesSlice = createSlice({
   },
   extraReducers: (builder) => {
     builder
-      .addCase(fetchPolicies.pending, (state) => { state.loading = true; state.error = null; })
+      .addCase(fetchPolicies.pending, (state) => {
+        state.loading = true;
+        state.error = null;
+      })
       .addCase(fetchPolicies.fulfilled, (state, action) => {
         state.loading = false;
         state.items = action.payload.data;
@@ -101,11 +104,25 @@ const policiesSlice = createSlice({
         state.page = action.payload.page;
         state.totalPages = action.payload.totalPages;
       })
-      .addCase(fetchPolicies.rejected, (state, action) => { state.loading = false; state.error = action.payload as string; })
-      .addCase(fetchPolicyById.pending, (state) => { state.loading = true; })
-      .addCase(fetchPolicyById.fulfilled, (state, action) => { state.loading = false; state.selectedPolicy = action.payload; })
-      .addCase(fetchPolicyById.rejected, (state, action) => { state.loading = false; state.error = action.payload as string; })
-      .addCase(createPolicy.fulfilled, (state, action) => { state.items.unshift(action.payload); state.total += 1; })
+      .addCase(fetchPolicies.rejected, (state, action) => {
+        state.loading = false;
+        state.error = action.payload as string;
+      })
+      .addCase(fetchPolicyById.pending, (state) => {
+        state.loading = true;
+      })
+      .addCase(fetchPolicyById.fulfilled, (state, action) => {
+        state.loading = false;
+        state.selectedPolicy = action.payload;
+      })
+      .addCase(fetchPolicyById.rejected, (state, action) => {
+        state.loading = false;
+        state.error = action.payload as string;
+      })
+      .addCase(createPolicy.fulfilled, (state, action) => {
+        state.items.unshift(action.payload);
+        state.total += 1;
+      })
       .addCase(cancelPolicy.fulfilled, (state, action) => {
         const idx = state.items.findIndex((p) => p.id === action.payload.id);
         if (idx !== -1) state.items[idx] = action.payload;

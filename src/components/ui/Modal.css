@@ -20,9 +20,15 @@
   animation: slideUp 0.2s ease;
 }
 
-.modal-sm { width: 400px; }
-.modal-md { width: 560px; }
-.modal-lg { width: 720px; }
+.modal-sm {
+  width: 400px;
+}
+.modal-md {
+  width: 560px;
+}
+.modal-lg {
+  width: 720px;
+}
 
 .modal-header {
   display: flex;
@@ -48,7 +54,9 @@
   transition: color var(--transition-fast);
 }
 
-.modal-close:hover { color: var(--color-gray-600); }
+.modal-close:hover {
+  color: var(--color-gray-600);
+}
 
 .modal-body {
   padding: var(--spacing-5);
@@ -64,5 +72,21 @@
   gap: var(--spacing-3);
 }
 
-@keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
-@keyframes slideUp { from { transform: translateY(10px); opacity: 0; } to { transform: translateY(0); opacity: 1; } }
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+@keyframes slideUp {
+  from {
+    transform: translateY(10px);
+    opacity: 0;
+  }
+  to {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}

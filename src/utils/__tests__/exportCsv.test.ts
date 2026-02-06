@@ -3,7 +3,11 @@ import { describe, it, expect, vi, beforeEach } from 'vitest';
 import { exportToCsv } from '../exportCsv';
 
 describe('exportToCsv', () => {
-  let mockLink: { setAttribute: ReturnType<typeof vi.fn>; click: ReturnType<typeof vi.fn>; style: Record<string, string> };
+  let mockLink: {
+    setAttribute: ReturnType<typeof vi.fn>;
+    click: ReturnType<typeof vi.fn>;
+    style: Record<string, string>;
+  };
 
   beforeEach(() => {
     mockLink = {

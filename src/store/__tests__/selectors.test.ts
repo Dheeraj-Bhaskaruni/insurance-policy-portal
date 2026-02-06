@@ -50,10 +50,43 @@ const makeClaim = (overrides: Partial<Claim> = {}): Claim => ({
 const makeState = (overrides: Partial<RootState> = {}): RootState =>
   ({
     auth: { user: null, token: null, isAuthenticated: false, loading: false, error: null },
-    policies: { items: [], total: 0, page: 1, totalPages: 0, loading: false, error: null, selectedPolicy: null, filters: {} },
-    claims: { items: [], total: 0, page: 1, totalPages: 0, loading: false, error: null, selectedClaim: null, filters: {} },
-    customers: { items: [], total: 0, page: 1, totalPages: 0, loading: false, error: null, selectedCustomer: null },
-    dashboard: { metrics: null, recentActivity: [], policyDistribution: [], claimsOverview: [], loading: false, error: null },
+    policies: {
+      items: [],
+      total: 0,
+      page: 1,
+      totalPages: 0,
+      loading: false,
+      error: null,
+      selectedPolicy: null,
+      filters: {},
+    },
+    claims: {
+      items: [],
+      total: 0,
+      page: 1,
+      totalPages: 0,
+      loading: false,
+      error: null,
+      selectedClaim: null,
+      filters: {},
+    },
+    customers: {
+      items: [],
+      total: 0,
+      page: 1,
+      totalPages: 0,
+      loading: false,
+      error: null,
+      selectedCustomer: null,
+    },
+    dashboard: {
+      metrics: null,
+      recentActivity: [],
+      policyDistribution: [],
+      claimsOverview: [],
+      loading: false,
+      error: null,
+    },
     ...overrides,
   }) as RootState;
 
@@ -165,7 +198,14 @@ describe('Selectors', () => {
       const state = makeState({
         auth: {
           ...makeState().auth,
-          user: { id: 'u1', email: 'test@test.com', firstName: 'Test', lastName: 'User', role: 'admin', createdAt: '2026-01-01' } as User,
+          user: {
+            id: 'u1',
+            email: 'test@test.com',
+            firstName: 'Test',
+            lastName: 'User',
+            role: 'admin',
+            createdAt: '2026-01-01',
+          } as User,
         },
       });
       expect(selectUserRole(state)).toBe('admin');

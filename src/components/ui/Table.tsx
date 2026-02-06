@@ -71,9 +71,16 @@ function Table<T>({
                 }}
                 role={col.sortable ? 'button' : undefined}
                 tabIndex={col.sortable ? 0 : undefined}
-                aria-sort={sortBy === col.key ? (sortOrder === 'asc' ? 'ascending' : 'descending') : undefined}
+                aria-sort={
+                  sortBy === col.key
+                    ? sortOrder === 'asc'
+                      ? 'ascending'
+                      : 'descending'
+                    : undefined
+                }
               >
-                {col.label}{col.sortable && getSortIndicator(col.key)}
+                {col.label}
+                {col.sortable && getSortIndicator(col.key)}
               </th>
             ))}
           </tr>

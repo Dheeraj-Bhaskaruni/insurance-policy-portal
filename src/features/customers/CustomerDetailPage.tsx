@@ -19,7 +19,9 @@ const CustomerDetailPage: React.FC = () => {
 
   useEffect(() => {
     if (id) dispatch(fetchCustomerById(id));
-    return () => { dispatch(clearSelectedCustomer()); };
+    return () => {
+      dispatch(clearSelectedCustomer());
+    };
   }, [id, dispatch]);
 
   if (loading || !customer) {
@@ -39,28 +41,53 @@ const CustomerDetailPage: React.FC = () => {
       <Card className="customer-profile-card">
         <div className="customer-profile-header">
           <div className="customer-avatar-lg">
-            {customer.firstName[0]}{customer.lastName[0]}
+            {customer.firstName[0]}
+            {customer.lastName[0]}
           </div>
           <div>
-            <h2>{customer.firstName} {customer.lastName}</h2>
+            <h2>
+              {customer.firstName} {customer.lastName}
+            </h2>
             <p className="customer-detail-meta">Customer since {formatDate(customer.createdAt)}</p>
           </div>
         </div>
 
         <div className="customer-info-grid">
-          <div className="customer-info-item"><span>Email</span><strong>{customer.email}</strong></div>
-          <div className="customer-info-item"><span>Phone</span><strong>{formatPhoneNumber(customer.phone)}</strong></div>
-          <div className="customer-info-item"><span>Address</span><strong>{customer.address}, {customer.city}, {customer.state} {customer.zipCode}</strong></div>
-          <div className="customer-info-item"><span>Date of Birth</span><strong>{formatDate(customer.dateOfBirth)}</strong></div>
-          <div className="customer-info-item"><span>Active Policies</span><strong>{customer.policies.length}</strong></div>
-          <div className="customer-info-item"><span>Total Premium</span><strong>{formatCurrency(customer.totalPremium)}</strong></div>
+          <div className="customer-info-item">
+            <span>Email</span>
+            <strong>{customer.email}</strong>
+          </div>
+          <div className="customer-info-item">
+            <span>Phone</span>
+            <strong>{formatPhoneNumber(customer.phone)}</strong>
+          </div>
+          <div className="customer-info-item">
+            <span>Address</span>
+            <strong>
+              {customer.address}, {customer.city}, {customer.state} {customer.zipCode}
+            </strong>
+          </div>
+          <div className="customer-info-item">
+            <span>Date of Birth</span>
+            <strong>{formatDate(customer.dateOfBirth)}</strong>
+          </div>
+          <div className="customer-info-item">
+            <span>Active Policies</span>
+            <strong>{customer.policies.length}</strong>
+          </div>
+          <div className="customer-info-item">
+            <span>Total Premium</span>
+            <strong>{formatCurrency(customer.totalPremium)}</strong>
+          </div>
         </div>
 
         <div className="customer-policies-section">
           <h3>Policy IDs</h3>
           <div className="customer-policy-badges">
             {customer.policies.map((pId) => (
-              <Badge key={pId} variant="info">{pId}</Badge>
+              <Badge key={pId} variant="info">
+                {pId}
+              </Badge>
             ))}
           </div>
         </div>

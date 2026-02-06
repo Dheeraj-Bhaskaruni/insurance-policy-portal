@@ -18,10 +18,7 @@ const defaultConfig: Required<RetryConfig> = {
   },
 };
 
-export async function withRetry<T>(
-  fn: () => Promise<T>,
-  config: RetryConfig = {},
-): Promise<T> {
+export async function withRetry<T>(fn: () => Promise<T>, config: RetryConfig = {}): Promise<T> {
   const { maxRetries, baseDelay, maxDelay, retryOn } = { ...defaultConfig, ...config };
 
   let lastError: unknown;

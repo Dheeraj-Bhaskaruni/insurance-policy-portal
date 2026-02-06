@@ -48,7 +48,9 @@ export const authService = {
     }
     // eslint-disable-next-line @typescript-eslint/no-unused-vars
     const { password: _password, ...userWithoutPassword } = user;
-    const token = btoa(JSON.stringify({ userId: user.id, role: user.role, exp: Date.now() + 86400000 }));
+    const token = btoa(
+      JSON.stringify({ userId: user.id, role: user.role, exp: Date.now() + 86400000 }),
+    );
     return { user: userWithoutPassword, token };
   },
 

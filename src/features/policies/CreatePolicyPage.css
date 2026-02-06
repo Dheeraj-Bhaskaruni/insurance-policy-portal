@@ -118,6 +118,11 @@
 }
 
 @media (max-width: 640px) {
-  .form-row { grid-template-columns: 1fr; }
-  .stepper { flex-direction: column; gap: var(--spacing-3); }
+  .form-row {
+    grid-template-columns: 1fr;
+  }
+  .stepper {
+    flex-direction: column;
+    gap: var(--spacing-3);
+  }
 }

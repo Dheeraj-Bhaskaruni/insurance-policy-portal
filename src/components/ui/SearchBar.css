@@ -43,4 +43,6 @@
   line-height: 1;
 }
 
-.search-clear:hover { color: var(--color-gray-600); }
+.search-clear:hover {
+  color: var(--color-gray-600);
+}

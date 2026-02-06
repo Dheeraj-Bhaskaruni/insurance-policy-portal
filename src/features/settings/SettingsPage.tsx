@@ -15,7 +15,10 @@ const SettingsPage: React.FC = () => {
   const user = useAppSelector(selectCurrentUser);
   const [pageSize, setPageSize] = useLocalStorage<number>('preferred_page_size', DEFAULT_PAGE_SIZE);
   const [compactMode, setCompactMode] = useLocalStorage<boolean>('compact_mode', false);
-  const [emailNotifications, setEmailNotifications] = useLocalStorage<boolean>('email_notifications', true);
+  const [emailNotifications, setEmailNotifications] = useLocalStorage<boolean>(
+    'email_notifications',
+    true,
+  );
 
   return (
     <div className="settings-page">
@@ -31,12 +34,15 @@ const SettingsPage: React.FC = () => {
           <h3 className="settings-section-title">Profile Information</h3>
           <div className="settings-profile">
             <div className="settings-avatar">
-              {user?.firstName?.[0]}{user?.lastName?.[0]}
+              {user?.firstName?.[0]}
+              {user?.lastName?.[0]}
             </div>
             <div className="settings-profile-info">
               <div className="settings-field">
                 <span className="settings-label">Name</span>
-                <span className="settings-value">{user?.firstName} {user?.lastName}</span>
+                <span className="settings-value">
+                  {user?.firstName} {user?.lastName}
+                </span>
               </div>
               <div className="settings-field">
                 <span className="settings-label">Email</span>
@@ -48,7 +54,9 @@ const SettingsPage: React.FC = () => {
               </div>
               <div className="settings-field">
                 <span className="settings-label">Member Since</span>
-                <span className="settings-value">{user?.createdAt ? formatDate(user.createdAt) : 'N/A'}</span>
+                <span className="settings-value">
+                  {user?.createdAt ? formatDate(user.createdAt) : 'N/A'}
+                </span>
               </div>
             </div>
           </div>
@@ -60,7 +68,9 @@ const SettingsPage: React.FC = () => {
             <div className="settings-option">
               <div>
                 <span className="settings-option-label">Default Page Size</span>
-                <span className="settings-option-desc">Number of items shown per page in tables</span>
+                <span className="settings-option-desc">
+                  Number of items shown per page in tables
+                </span>
               </div>
               <select
                 className="settings-select"
@@ -68,7 +78,9 @@ const SettingsPage: React.FC = () => {
                 onChange={(e) => setPageSize(Number(e.target.value))}
               >
                 {PAGE_SIZES.map((size) => (
-                  <option key={size} value={size}>{size} items</option>
+                  <option key={size} value={size}>
+                    {size} items
+                  </option>
                 ))}
               </select>
             </div>
@@ -91,7 +103,9 @@ const SettingsPage: React.FC = () => {
             <div className="settings-option">
               <div>
                 <span className="settings-option-label">Email Notifications</span>
-                <span className="settings-option-desc">Receive email updates about policy changes</span>
+                <span className="settings-option-desc">
+                  Receive email updates about policy changes
+                </span>
               </div>
               <label className="settings-toggle" aria-label="Email Notifications">
                 <input
@@ -114,7 +128,9 @@ const SettingsPage: React.FC = () => {
             </div>
             <div className="settings-field">
               <span className="settings-label">Environment</span>
-              <span className="settings-value">{import.meta.env.VITE_APP_ENV || 'development'}</span>
+              <span className="settings-value">
+                {import.meta.env.VITE_APP_ENV || 'development'}
+              </span>
             </div>
           </div>
         </Card>
